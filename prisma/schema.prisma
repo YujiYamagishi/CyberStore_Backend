@@ -1,0 +1,100 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Produto {
+  id                  Int              @id @default(autoincrement())
+  name                String
+  description         String
+  brand               String
+  price               Decimal          
+  discounted_price    Decimal          
+  stock               Int
+  url_image           String
+  created_at          DateTime         @default(now())
+  update_at           DateTime         @updatedAt
+  tag                 String
+  id_category         Int
+  id_specs_smartphone Int?
+
+  category         Category         @relation(fields: [id_category], references: [id])
+  smartphoneSpec   SmartphoneSpec?  @relation(fields: [id_specs_smartphone], references: [id])
+  colorsProducts   ColorsProduct[]
+  storageOptions   StorageOption[]
+  reviews          Review[]
+
+  @@map("Produtos")
+}
+
+model ColorsProduct {
+  id_product Int
+  hex_code   String
+  name       String
+  created_at DateTime   @default(now())
+  update_at  DateTime   @updatedAt
+
+  produto    Produto    @relation(fields: [id_product], references: [id])
+
+  @@id([id_product, hex_code])
+  @@map("ColorsProduct")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  created_at  DateTime  @default(now())
+  update_at   DateTime  @updatedAt
+
+  produtos    Produto[]
+
+  @@map("categories")
+}
+
+model StorageOption {
+  id_product Int
+  size       String
+  created_at DateTime  @default(now())
+  update_at  DateTime  @updatedAt
+
+  produto    Produto   @relation(fields: [id_product], references: [id])
+
+  @@id([id_product, size])
+  @@map("storageOptions")
+}
+
+model Review {
+  id             Int      @id @default(autoincrement())
+  id_product     Int
+  rating         Int
+  message        String
+  name_user      String
+  url_image_user String
+  created_at     DateTime @default(now())
+  update_at      DateTime @updatedAt
+
+  produto        Produto  @relation(fields: [id_product], references: [id])
+
+  @@map("Review")
+}
+
+model SmartphoneSpec {
+  id           Int       @id @default(autoincrement())
+  screen_size  String
+  cpu          String
+  total_cores  String
+  main_camera  String
+  front_camera String
+  battery      String
+  created_at   DateTime  @default(now())
+  update_at    DateTime  @updatedAt
+
+  produtos     Produto[] 
+
+  @@map("SmartphoneSpecs")
+}
