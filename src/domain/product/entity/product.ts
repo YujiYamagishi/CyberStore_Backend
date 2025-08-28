@@ -49,11 +49,11 @@ export class Product {
         return this.props.url_image;
     }
 
-    public get createdAt() {
+    public get created_at() {
         return this.props.created_at;
     }
 
-    public get updatedAt() {
+    public get updated_at() {
         return this.props.updated_at;
     }
     public get id_category() {

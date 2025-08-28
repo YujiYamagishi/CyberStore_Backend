@@ -21,11 +21,11 @@ export class Category {
         return this.props.description;
     }
 
-    public get createdAt() {
+    public get created_at() {
         return this.props.created_at;
     }
 
-    public get updatedAt() {
+    public get updated_at() {
         return this.props.updated_at;
     }
 }
