@@ -3,7 +3,7 @@ export type StorageOptionProps = {
     size: string;
     id_product: number;
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
 };
 
 export class StorageOption {

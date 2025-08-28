@@ -8,7 +8,7 @@ export type ProductProps = {
     stock: number;
     url_image: string;
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
     id_category: number;
     tag: string;
     id_specs_smartphone?: number | null;

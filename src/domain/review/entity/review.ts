@@ -5,7 +5,7 @@ export type ReviewProps = {
     message: string;
     id_user: number;
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
 }
 
 

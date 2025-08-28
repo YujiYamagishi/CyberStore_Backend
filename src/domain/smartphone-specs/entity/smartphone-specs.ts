@@ -7,7 +7,7 @@ export type SmartphoneSpecsProps = {
     front_camera: string;
     battery: string;
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
 }
 
 

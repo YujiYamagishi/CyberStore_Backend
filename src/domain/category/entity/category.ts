@@ -3,7 +3,7 @@ export type CategoryProps = {
     name: string;
     description: string;
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
 };
 
 export class Category {

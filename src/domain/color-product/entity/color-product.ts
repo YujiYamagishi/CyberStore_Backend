@@ -4,7 +4,7 @@ export type ColorProductProps = {
     hex_code: string;
     name: string;
     created_at: Date;
-    updated_at: Date;
+    updated_at?: Date;
 };
 
 export class ColorProduct {
