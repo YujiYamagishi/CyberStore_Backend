@@ -9,6 +9,10 @@ export type CategoryProps = {
 export class Category {
     private constructor(private props: CategoryProps) {}
 
+    public static with(props: CategoryProps){
+        return new Category(props);
+    }
+
     public get id() {
         return this.props.id;
     }
