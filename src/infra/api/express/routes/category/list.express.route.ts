@@ -23,7 +23,7 @@ export class ListCategoryRoute implements Route {
 
     public static create(listCategoryService: ListCategoryUseCase): ListCategoryRoute {
         return new ListCategoryRoute(
-            "/categories",
+            "/api/categories",
             HttpMethod.GET,
             listCategoryService
         );
