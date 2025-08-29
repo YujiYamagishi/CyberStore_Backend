@@ -1,11 +1,13 @@
 import { ApiExpress } from "./infra/api/express/api.express";
 import { ListCategoryRoute } from "./infra/api/express/routes/category/list.express.route";
+import { ListProductsByBrandRoute } from "./infra/api/express/routes/product/listByBrand.express";
 import { ListProductByIdRoute } from "./infra/api/express/routes/product/listById.express";
 import { ListProductByTagRoute } from "./infra/api/express/routes/product/listByTag.express";
 import { CategoryRepositoryPrisma } from "./infra/repositories/category/category.repository.prisma";
 import { ProductRepositoryPrisma } from "./infra/repositories/product/product.repository.prisma";
 import { prisma } from "./package/prisma";
 import { ListCategoryUseCase } from "./usecases/category/list.usecase";
+import { ListProductsByBrandUseCase } from "./usecases/product/listByBrand.usecase";
 import { ListProductByIdUseCase } from "./usecases/product/listById.usecase";
 import { ListProductByTagUseCase } from "./usecases/product/listByTag.usecase";
 
@@ -23,7 +25,10 @@ function main() {
     const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository);
     const listProductByIdRoute = ListProductByIdRoute.create(listProductByIdUsecase);
 
-    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute]);
+    const listProductsByBrandUseCase = ListProductsByBrandUseCase.create(productRepository);
+    const listProductsByBrandRoute = ListProductsByBrandRoute.create(listProductsByBrandUseCase)
+
+    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute]);
     const port = 8000;
     api.start(port);
 }

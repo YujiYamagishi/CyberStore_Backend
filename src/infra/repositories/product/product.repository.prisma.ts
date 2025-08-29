@@ -90,4 +90,34 @@ export class ProductRepositoryPrisma implements ProductGateway {
         return productList;
     }
 
+    public async listByBrand(brand: string): Promise<Product[]> {
+        const products = await this.prismaClient.product.findMany({
+            where: {
+                brand
+            }
+        })
+
+        const productList = products.map((p) => {
+            const product = Product.with({
+                id: p.id,
+                name: p.name,
+                description: p.description,
+                brand: p.brand,
+                price: Number(p.price),
+                discounted_price: Number(p.discounted_price),
+                stock: p.stock,
+                url_image: p.url_image,
+                created_at: p.created_at,
+                updated_at: p.update_at,
+                id_category: p.id_category,
+                tag: p.tag,
+                id_specs_smartphone: p.id_specs_smartphone
+            });
+
+            return product;
+        })
+
+        return productList;
+    }
+
 }
