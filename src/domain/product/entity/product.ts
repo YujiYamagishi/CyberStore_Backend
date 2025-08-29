@@ -18,6 +18,10 @@ export type ProductProps = {
 export class Product {
     private constructor(private props: ProductProps) { }
 
+    public static with(props: ProductProps){
+        return new Product(props);
+    }
+
     public get id() {
         return this.props.id;
     }
