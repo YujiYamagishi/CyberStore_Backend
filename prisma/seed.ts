@@ -32,7 +32,7 @@ async function main() {
         ]
     });
 
-    await prisma.produto.createMany({
+    await prisma.product.createMany({
         data: [
             { id: 1, name: 'iPhone 14 Pro', description: 'Apple smartphone with triple camera and A16 Bionic chip', brand: 'Apple', price: 7999, discounted_price: 7499, stock: 50, url_image: 'https://cdn.pixabay.com/photo/2017/10/15/16/20/iphone-2854317_1280.png', tag: 'bestseller', id_category: 1, id_specs_smartphone: 1 },
             { id: 2, name: 'Samsung Galaxy S23 Ultra', description: 'Samsung smartphone with 200MP camera and Snapdragon 8 Gen 2', brand: 'Samsung', price: 6999, discounted_price: 6599, stock: 40, url_image: 'https://cdn.pixabay.com/photo/2017/10/15/16/20/iphone-2854317_1280.png', tag: 'new_arrival', id_category: 1, id_specs_smartphone: 2 },

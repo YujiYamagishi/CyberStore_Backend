@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Produto {
+model Product {
   id                  Int              @id @default(autoincrement())
   name                String
   description         String
@@ -28,7 +28,7 @@ model Produto {
   storageOptions   StorageOption[]
   reviews          Review[]
 
-  @@map("Produtos")
+  @@map("Products")
 }
 
 model ColorsProduct {
@@ -38,7 +38,7 @@ model ColorsProduct {
   created_at DateTime   @default(now())
   update_at  DateTime   @updatedAt
 
-  produto    Produto    @relation(fields: [id_product], references: [id])
+  produto    Product    @relation(fields: [id_product], references: [id])
 
   @@id([id_product, hex_code])
   @@map("ColorsProduct")
@@ -51,7 +51,7 @@ model Category {
   created_at  DateTime  @default(now())
   update_at   DateTime  @updatedAt
 
-  produtos    Produto[]
+  produtos    Product[]
 
   @@map("categories")
 }
@@ -62,7 +62,7 @@ model StorageOption {
   created_at DateTime  @default(now())
   update_at  DateTime  @updatedAt
 
-  produto    Produto   @relation(fields: [id_product], references: [id])
+  produto    Product   @relation(fields: [id_product], references: [id])
 
   @@id([id_product, size])
   @@map("storageOptions")
@@ -78,7 +78,7 @@ model Review {
   created_at     DateTime @default(now())
   update_at      DateTime @updatedAt
 
-  produto        Produto  @relation(fields: [id_product], references: [id])
+  produto        Product  @relation(fields: [id_product], references: [id])
 
   @@map("Review")
 }
@@ -94,7 +94,7 @@ model SmartphoneSpec {
   created_at   DateTime  @default(now())
   update_at    DateTime  @updatedAt
 
-  produtos     Produto[] 
+  produtos     Product[] 
 
   @@map("SmartphoneSpecs")
 }
