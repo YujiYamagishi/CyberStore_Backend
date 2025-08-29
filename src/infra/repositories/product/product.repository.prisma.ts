@@ -16,7 +16,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
     }
 
     public async listByTag(tag: string): Promise<Product[]> {
-        const products = await this.prismaClient.produto.findMany({
+        const products = await this.prismaClient.product.findMany({
             where: {
                 tag
             }
