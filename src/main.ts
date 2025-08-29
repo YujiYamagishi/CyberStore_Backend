@@ -10,7 +10,8 @@ import { ListCategoryUseCase } from "./usecases/category/list.usecase";
 import { ListProductsByBrandUseCase } from "./usecases/product/listByBrand.usecase";
 import { ListProductByIdUseCase } from "./usecases/product/listById.usecase";
 import { ListProductByTagUseCase } from "./usecases/product/listByTag.usecase";
-
+import { GetBrandTotalsUseCase } from "./usecases/brand/get-brands-total.use-case";
+import { GetBrandTotalsRoute } from "./infra/api/express/routes/brand/get-brand-totals.express.route";
 function main() {
 
     const aRepository = CategoryRepositoryPrisma.create(prisma);
@@ -28,7 +29,10 @@ function main() {
     const listProductsByBrandUseCase = ListProductsByBrandUseCase.create(productRepository);
     const listProductsByBrandRoute = ListProductsByBrandRoute.create(listProductsByBrandUseCase)
 
-    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute]);
+    const getBrandTotalsUseCase = GetBrandTotalsUseCase.create(productRepository);
+    const getBrandTotalsRoute = GetBrandTotalsRoute.create(getBrandTotalsUseCase);
+
+    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute]);
     const port = 8000;
     api.start(port);
 }
