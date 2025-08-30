@@ -2,10 +2,24 @@ import { PrismaClient } from "@prisma/client";
 import { Product } from "../../../domain/product/entity/product";
 import { ProductGateway } from "../../../domain/product/gateway/product.gateway";
 import { SmartphoneSpecDto } from "../../../usecases/product/listById.usecase";
+import { BrandTotal } from "../../../domain/brand/entity/brand-total.entity";
 
 export class ProductRepositoryPrisma implements ProductGateway {
 
     private constructor(private readonly prismaClient: PrismaClient) { }
+    async getBrandTotals(): Promise<BrandTotal[]> {
+        const result = await this.prismaClient.product.groupBy({
+            by: ['brand'],
+            _count: {brand:true},
+        })
+
+        const brandTotals = result.map(item => BrandTotal.create({
+            brand: item.brand,
+            total: item._count.brand,
+        }))
+
+        return brandTotals;
+    };
 
     public static create(prismaClient: PrismaClient) {
         return new ProductRepositoryPrisma(prismaClient);
