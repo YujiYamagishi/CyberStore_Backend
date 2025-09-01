@@ -12,9 +12,11 @@ import { ListProductByIdUseCase } from "./usecases/product/listById.usecase";
 import { ListProductByTagUseCase } from "./usecases/product/listByTag.usecase";
 import { GetBrandTotalsUseCase } from "./usecases/brand/get-brands-total.use-case";
 import { GetBrandTotalsRoute } from "./infra/api/express/routes/brand/get-brand-totals.express.route";
-import { ListRatingByProductIdUseCase } from "./usecases/review/listRatingByProductId.usecase"; 
-import { ListRatingByProductIdRoute } from "./infra/api/express/routes/review/listRatingByProductId.express"; 
-import { ReviewRepositoryPrisma } from "./infra/repositories/review/review.repository";
+import { ListRatingByProductIdUseCase } from "./usecases/review/list-rating-by-product-id.usecase"; 
+import { ListRatingByProductIdRoute } from "./infra/api/express/routes/review/list-rating-by-product-id.express.route"; 
+import { ListReviewsByProductIdUseCase} from "./usecases/review/list-by-product-id.usecase";
+import { ListReviewsByProductIdRoute } from "./infra/api/express/routes/review/list-by-product-id.express.route";
+import { ReviewRepositoryPrisma } from "./infra/repositories/review/review.repository.prisma";
 function main() {
 
     const aRepository = CategoryRepositoryPrisma.create(prisma);
@@ -23,12 +25,14 @@ function main() {
 
     const listCategoryUsecase = ListCategoryUseCase.create(aRepository);
     const listProductByTagUsecase = ListProductByTagUseCase.create(productRepository);
+    const listReviewsByProductIdUseCase = ListReviewsByProductIdUseCase.create(reviewRepository);
 
     const listRoute = ListCategoryRoute.create(listCategoryUsecase);
     const listProductByTagRoute = ListProductByTagRoute.create(listProductByTagUsecase);
 
     const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository);
     const listProductByIdRoute = ListProductByIdRoute.create(listProductByIdUsecase);
+    const listReviewsByProductIdRoute = ListReviewsByProductIdRoute.create(listReviewsByProductIdUseCase);
 
     const listProductsByBrandUseCase = ListProductsByBrandUseCase.create(productRepository);
     const listProductsByBrandRoute = ListProductsByBrandRoute.create(listProductsByBrandUseCase)
@@ -39,7 +43,8 @@ function main() {
     const listRatingByProductIdUseCase = ListRatingByProductIdUseCase.create(reviewRepository);
     const listRatingByProductIdRoute = ListRatingByProductIdRoute.create(listRatingByProductIdUseCase);
 
-    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute, listRatingByProductIdRoute]);
+    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute, listRatingByProductIdRoute, listReviewsByProductIdRoute]);
+
     const port = 8000;
     api.start(port);
 }

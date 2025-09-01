@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route"
-import { ListRatingByProductIdOutputDto, ListRatingByProductIdUseCase } from "../../../../../usecases/review/listRatingByProductId.usecase";
+import { ListRatingByProductIdOutputDto, ListRatingByProductIdUseCase } from "../../../../../usecases/review/list-rating-by-product-id.usecase";
 
 
 
