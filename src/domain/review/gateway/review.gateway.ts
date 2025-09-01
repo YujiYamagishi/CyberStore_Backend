@@ -1,6 +1,5 @@
 import { Review } from "../entity/review";
 
 export interface ReviewGateway{
-    list(): Promise<Review[]>;
-
+    listRatingByProductId(product_id: number): Promise<number[]>;
 }
