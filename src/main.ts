@@ -12,19 +12,26 @@ import { ListProductByIdUseCase } from "./usecases/product/listById.usecase";
 import { ListProductByTagUseCase } from "./usecases/product/listByTag.usecase";
 import { GetBrandTotalsUseCase } from "./usecases/brand/get-brands-total.use-case";
 import { GetBrandTotalsRoute } from "./infra/api/express/routes/brand/get-brand-totals.express.route";
+import { ReviewRepositoryPrisma } from "./infra/repositories/reviews/review.repository.prisma";
+import { ListReviewsByProductIdUseCase} from "./usecases/review/list-by-product-id.usecase";
+import { ListReviewsByProductIdRoute } from "./infra/api/express/routes/review/list-by-product-id.express.route";
 function main() {
 
     const aRepository = CategoryRepositoryPrisma.create(prisma);
     const productRepository = ProductRepositoryPrisma.create(prisma);
+    const reviewRepositoryPrisma = ReviewRepositoryPrisma.create(prisma); 
 
     const listCategoryUsecase = ListCategoryUseCase.create(aRepository);
     const listProductByTagUsecase = ListProductByTagUseCase.create(productRepository);
+    const listReviewsByProductIdUseCase = ListReviewsByProductIdUseCase.create(reviewRepositoryPrisma);
 
     const listRoute = ListCategoryRoute.create(listCategoryUsecase);
     const listProductByTagRoute = ListProductByTagRoute.create(listProductByTagUsecase);
 
     const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository);
     const listProductByIdRoute = ListProductByIdRoute.create(listProductByIdUsecase);
+    const listReviewsByProductIdRoute = ListReviewsByProductIdRoute.create(listReviewsByProductIdUseCase);
+
 
     const listProductsByBrandUseCase = ListProductsByBrandUseCase.create(productRepository);
     const listProductsByBrandRoute = ListProductsByBrandRoute.create(listProductsByBrandUseCase)
@@ -32,7 +39,7 @@ function main() {
     const getBrandTotalsUseCase = GetBrandTotalsUseCase.create(productRepository);
     const getBrandTotalsRoute = GetBrandTotalsRoute.create(getBrandTotalsUseCase);
 
-    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute]);
+    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute, listReviewsByProductIdRoute]);
     const port = 8000;
     api.start(port);
 }
