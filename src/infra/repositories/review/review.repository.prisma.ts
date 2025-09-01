@@ -13,7 +13,15 @@ export class ReviewRepositoryPrisma implements ReviewGateway {
     public async list(): Promise<Review[]> {
         return [];
     }
-    
+
+    public async listRatingByProductId(productId: number): Promise<number[]> {
+        const ratings = await this.prismaClient.review.findMany({
+            where: { id_product: productId },
+            select: { rating: true }
+        });
+        return ratings.map(r => r.rating);
+    }
+
     public async listByProductId(productId: number, page: number, pageSize: number): Promise<PaginatedReviews> {
         const skip = (page - 1) * pageSize;
         const take = pageSize;
@@ -43,7 +51,7 @@ export class ReviewRepositoryPrisma implements ReviewGateway {
             name_user: review.name_user,
             url_image_user: review.url_image_user,
         }));
-        
+
         const totalPages = Math.ceil(totalReviews / pageSize);
         const hasNextPage = page < totalPages;
 
