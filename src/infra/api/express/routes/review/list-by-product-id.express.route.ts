@@ -22,7 +22,7 @@ export class ListReviewsByProductIdRoute implements Route {
 
     public static create(listReviewsByProductIdUseCase: ListReviewsByProductIdUseCase): ListReviewsByProductIdRoute {
         return new ListReviewsByProductIdRoute(
-            "/api/reviews/comment/:productId",
+            "/api/reviews/comments/:productId",
             HttpMethod.GET,
             listReviewsByProductIdUseCase
         );

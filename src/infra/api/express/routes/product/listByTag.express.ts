@@ -32,7 +32,7 @@ export class ListProductByTagRoute implements Route {
 
     public static create(listProductByTagService: ListProductByTagUseCase): ListProductByTagRoute {
         return new ListProductByTagRoute(
-            "/products/tag/:tag",
+            "/api/products/tag/:tag",
             HttpMethod.GET,
             listProductByTagService
         );
