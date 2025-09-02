@@ -3,7 +3,7 @@ import * as express from "express";
 import type { Express } from "express";
 import type { Route } from "./routes/route";
 export class ApiExpress implements Api {
-    private app: Express;
+    public app: Express;
 
     private constructor(routes: Route[]) {
         this.app = express();

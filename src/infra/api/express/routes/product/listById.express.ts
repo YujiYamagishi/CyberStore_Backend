@@ -33,7 +33,7 @@ export class ListProductByIdRoute implements Route {
 
                 if (isNaN(numericId)) {
                     response.status(400).json({
-                        error: "Invalid or missing id parameter"
+                        error: "Id parameter is required"
                     });
                     return;
                 }

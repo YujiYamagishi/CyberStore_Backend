@@ -1,0 +1,179 @@
+/api/reviews/comment/{productId}:
+  get:
+    summary: List reviews by product ID (paginated)
+    description: List reviews by product ID, including pagination support.
+    tags:
+      - Review
+    parameters:
+      - in: path
+        name: productId
+        required: true
+        schema:
+          type: integer
+        description: The product ID to get reviews for
+        example: 2
+      - in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+        example: 1
+      - in: query
+        name: size
+        required: false
+        schema:
+          type: integer
+          default: 3
+        description: Number of reviews per page
+        example: 3
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  description: Total number of reviews for this product
+                page:
+                  type: integer
+                  description: Current page number
+                pageSize:
+                  type: integer
+                  description: Number of reviews per page
+                reviews:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      productId:
+                        type: integer
+                      user:
+                        type: string
+                      rating:
+                        type: integer
+                      comment:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+            example:
+              total: 5
+              page: 1
+              pageSize: 3
+              reviews:
+                - id: 1
+                  productId: 2
+                  user: "john_doe"
+                  rating: 5
+                  comment: "Excellent product!"
+                  created_at: "2025-09-02T18:00:00.000Z"
+                - id: 2
+                  productId: 2
+                  user: "jane_smith"
+                  rating: 4
+                  comment: "Very good, but could be cheaper."
+                  created_at: "2025-09-01T15:30:00.000Z"
+                - id: 3
+                  productId: 2
+                  user: "alex"
+                  rating: 3
+                  comment: "Average experience."
+                  created_at: "2025-08-30T12:10:00.000Z"
+      400:
+        description: Invalid or missing product ID
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: "Product ID is required."
+      500:
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: "Internal Server Error"
+
+/api/reviews/summary/{product_id}:
+  get:
+    summary: Get rating summary by product ID
+    description: Get rating summary by product ID
+    tags:
+      - Review
+    parameters:
+      - in: path
+        name: product_id
+        required: true
+        schema:
+          type: integer
+        example: 2
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    reviews:
+                      type: integer
+                    excellent:
+                      type: integer
+                    good:
+                      type: integer
+                    average:
+                      type: integer
+                    below_average:
+                      type: integer
+                    poor:
+                      type: integer
+                    media:
+                      type: number
+                      format: float
+            example:
+              data:
+                reviews: 8
+                excellent: 5
+                good: 2
+                average: 1
+                below_average: 0
+                poor: 0
+                media: 4.5
+      400:
+        description: Product ID parameter is required
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: "Product ID parameter is required"
+      500:
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: "Internal server error"

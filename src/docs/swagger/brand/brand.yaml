@@ -1,0 +1,42 @@
+/api/products/brands:
+  get:
+    summary: Get total products and names by brand
+    tags:
+      - Product
+    description: List of brands with total products
+    responses:
+      200:
+
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      brand:
+                        type: string
+                      total:
+                        type: integer
+            example:
+              data:
+                - brand: "Apple"
+                  total: 12
+                - brand: "Samsung"
+                  total: 8
+                - brand: "Xiaomi"
+                  total: 5
+      500:
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: "Internal server error"
