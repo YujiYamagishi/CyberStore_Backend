@@ -33,18 +33,26 @@ export class ListProductByIdRoute implements Route {
 
                 if (isNaN(numericId)) {
                     response.status(400).json({
-                        error: "Id parameter is required"
+                        error: "Id parameter is required."
                     });
                     return;
                 }
 
                 const output = await this.listProductByIdService.execute({ id: numericId });
+
+                if (!output || !output.products) {
+                    response.status(404).json({
+                        error: "Product not found."
+                    });
+                    return;
+                }
+
                 const responseBody = this.present(output);
 
                 response.status(200).json(responseBody);
             } catch (error) {
                 response.status(500).json({
-                    error: "Internal server error"
+                    error: "Internal server error."
                 });
             }
         }

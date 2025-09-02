@@ -43,11 +43,11 @@ export class ListProductByIdUseCase implements Usecase<ListProductByIdInputDto, 
         return new ListProductByIdUseCase(productGateway);
     }
 
-    public async execute(input: ListProductByIdInputDto): Promise<ListProductByIdOutputDto> {
+    public async execute(input: ListProductByIdInputDto): Promise<ListProductByIdOutputDto | null> {
         const { product, smartphoneSpec } = await this.productGateway.listById(input.id);
 
         if (!product) {
-            throw new Error("Product not found");
+           return null;
         }
         return this.presentOutput(product, smartphoneSpec);
     }

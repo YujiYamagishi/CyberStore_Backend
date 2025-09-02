@@ -41,19 +41,26 @@ export class ListProductsByBrandRoute implements Route {
 
                 if (!brand) {
                     response.status(400).json({
-                        error: "Brand parameter is required"
+                        error: "Brand parameter is required."
                     });
-                    return
+                    return;
                 }
 
                 const output = await this.listProductsByBrandService.execute({ brand });
+
+                if (!output || !output.products || output.products.length === 0) {
+                    response.status(404).json({
+                        error: "No products found for this brand."
+                    });
+                    return;
+                }
+
                 const responseBody = this.present(output);
 
                 response.status(200).json(responseBody);
             } catch (error) {
-                console.error("Error in ListProductByBrandRoute", error);
                 response.status(500).json({
-                    error: "Internal server error"
+                    error: "Internal server error."
                 });
             }
         }

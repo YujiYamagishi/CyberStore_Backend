@@ -45,19 +45,19 @@ export class ListProductByTagRoute implements Route {
 
                 if (!tag) {
                     response.status(400).json({
-                        error: "Tag parameter is required"
+                        error: "Tag parameter is required."
                     });
-                    return
+                    return;
                 }
 
                 const output = await this.listProductByTagService.execute({ tag });
+
                 const responseBody = this.present(output);
 
                 response.status(200).json(responseBody);
             } catch (error) {
-                console.error("Error in ListProductByTagRoute", error);
                 response.status(500).json({
-                    error: "Internal server error"
+                    error: "Internal server error."
                 });
             }
         }
