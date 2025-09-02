@@ -29,15 +29,19 @@ export class ListCategoryRoute implements Route {
         );
     }
 
-    public getHandler() {
-        return async (request: Request, response: Response) => {
+public getHandler() {
+    return async (request: Request, response: Response) => {
+        try {
             const output = await this.listCategoryService.execute();
 
             const responseBody = this.present(output);
 
             response.status(200).json(responseBody);
-        };
-    }
+        } catch (error) {
+            response.status(500).json({ error: "Internal server error." });
+        }
+    };
+}
 
     public getPath(): string {
         return this.path;

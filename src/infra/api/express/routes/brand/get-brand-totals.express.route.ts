@@ -3,7 +3,6 @@ import { type Request, type Response } from "express";
 import { GetBrandTotalsUseCase } from "../../../../../usecases/brand/get-brands-total.use-case";
 import { BrandTotal } from "../../../../../domain/brand/entity/brand-total.entity";
 import { HttpMethod, type Route } from "../route";
-import { request } from "http";
 
 export type GetBrandTotalsResponseDTO = {
     data: {
@@ -27,18 +26,23 @@ export class GetBrandTotalsRoute implements Route {
         this.getBrandTotalsUseCase = getBrandTotalsUseCase;
     }
 
-    public static create(getBrandTotalsUseCase: GetBrandTotalsUseCase):GetBrandTotalsRoute{
+    public static create(getBrandTotalsUseCase: GetBrandTotalsUseCase): GetBrandTotalsRoute {
         return new GetBrandTotalsRoute(
             '/api/products/brands',
             HttpMethod.GET,
             getBrandTotalsUseCase
         );
     }
-    public getHandler(){
-        return async (request:Request, response:Response)=>{
-            const output = await this.getBrandTotalsUseCase.execute();
-            const responseBody = this.present(output);
-            response.status(200).json(responseBody);
+    public getHandler() {
+        return async (request: Request, response: Response) => {
+            try {
+                const output = await this.getBrandTotalsUseCase.execute();
+
+                const responseBody = this.present(output);
+                response.status(200).json(responseBody);
+            } catch (error) {
+                response.status(500).json({ error: "Internal server error." });
+            }
         };
     }
 
@@ -50,7 +54,7 @@ export class GetBrandTotalsRoute implements Route {
         return this.method;
     }
 
-    private present(input: BrandTotal[]): GetBrandTotalsResponseDTO{
+    private present(input: BrandTotal[]): GetBrandTotalsResponseDTO {
         const response: GetBrandTotalsResponseDTO = {
             data: input.map(item => ({
                 brand: item.brand,

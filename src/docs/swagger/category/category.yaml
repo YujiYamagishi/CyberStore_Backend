@@ -1,0 +1,30 @@
+/api/categories:
+  get:
+    summary: List all categories
+    tags:
+      - Category
+    description: List of all categories.
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categories:
+                  type: array
+                  items:
+                    type: string
+            example:
+              categories: ["Smartphones", "Tablets", "Notebooks"]
+      500:
+        description: Internal server error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Internal server error.

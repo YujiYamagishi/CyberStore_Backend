@@ -47,7 +47,7 @@ export class ListRatingByProductIdRoute implements Route {
 
                 if (!product_id) {
                     response.status(400).json({
-                        error: "Product ID parameter is required"
+                        error: "Product ID parameter is required."
                     });
                     return
                 }
@@ -58,7 +58,7 @@ export class ListRatingByProductIdRoute implements Route {
                 response.status(200).json(responseBody);
             } catch (error) {
                 response.status(500).json({
-                    error: "Internal server error"
+                    error: "Internal server error."
                 });
             }
         }

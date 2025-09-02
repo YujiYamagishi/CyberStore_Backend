@@ -17,6 +17,10 @@ import { ListRatingByProductIdRoute } from "./infra/api/express/routes/review/li
 import { ListReviewsByProductIdUseCase} from "./usecases/review/list-by-product-id.usecase";
 import { ListReviewsByProductIdRoute } from "./infra/api/express/routes/review/list-by-product-id.express.route";
 import { ReviewRepositoryPrisma } from "./infra/repositories/review/review.repository.prisma";
+import * as swaggerUi from "swagger-ui-express";
+import * as swaggerJsdoc from "swagger-jsdoc"
+import { swaggerOptions } from "./docs/swagger/swagger-config";
+
 function main() {
 
     const aRepository = CategoryRepositoryPrisma.create(prisma);
@@ -44,7 +48,8 @@ function main() {
     const listRatingByProductIdRoute = ListRatingByProductIdRoute.create(listRatingByProductIdUseCase);
 
     const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute, listRatingByProductIdRoute, listReviewsByProductIdRoute]);
-
+    const specs = swaggerJsdoc(swaggerOptions);
+    api.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
     const port = 8000;
     api.start(port);
 }

@@ -1,0 +1,270 @@
+/api/product/{id}:
+  get:
+    summary: Get product by ID
+    description:  Returns the details of a product for the given ID, including all main attributes and specifications.
+    tags:
+      - Product
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    brand:
+                      type: string
+                    price:
+                      type: number
+                    discounted_price:
+                      type: number
+                    stock:
+                      type: integer
+                    url_image:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    id_category:
+                      type: integer
+                    tag:
+                      type: string
+                    id_specs_smartphone:
+                      type: integer
+                      nullable: true
+                    smartphoneSpec:
+                      type: object
+                      nullable: true
+                      properties:
+                        screen_size:
+                          type: string
+                        cpu:
+                          type: string
+                        total_cores:
+                          type: string
+                        main_camera:
+                          type: string
+                        front_camera:
+                          type: string
+                        battery:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+            example:
+              data:
+                id: 16
+                name: "iPad Pro"
+                description: "Apple tablet with M2 chip and Liquid Retina display"
+                brand: "Apple"
+                price: 7999
+                discounted_price: 7499
+                stock: 25
+                url_image: "https://images.unsplash.com/photo-1623126908029-58cb08a2b272"
+                created_at: "2025-08-29T17:43:00.082Z"
+                updated_at: "2025-08-29T17:43:00.082Z"
+                id_category: 3
+                tag: "bestseller"
+                id_specs_smartphone: null
+                smartphoneSpec: null
+      400:
+        description: Id parameter is required.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: number
+            example:
+              error: Id parameter is required.
+      404:
+        description: Product not found.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Product not found.
+      500:
+        description: Internal server error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Internal server error.
+
+/api/products/tag/{tag}:
+  get:
+    summary: List products by tag
+    description: Returns a list of products that match the specified tag.
+    tags:
+      - Product
+    parameters:
+      - in: path
+        name: tag
+        required: true
+        schema:
+          type: string
+        example: bestseller
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      price:
+                        type: number
+                      tag:
+                        type: string
+                      url_image:
+                        type: string
+            example:
+              data:
+                - id: 1
+                  name: "iPhone 15"
+                  price: 7999
+                  tag: "bestseller"
+                  url_image: "https://images.unsplash.com/photo-1623126908029-58cb08a2b272"
+                - id: 2
+                  name: "Galaxy S23"
+                  price: 6999
+                  tag: "bestseller"
+                  url_image: "https://cdn.pixabay.com/photo/2017/11/15/16/20/iphone-2854317_1280.png"
+      400:
+        description: Tag parameter is required.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Tag parameter is required.
+      500:
+        description: Internal server error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Internal server error.
+
+/api/products/related/{brand}:
+  get:
+    summary: List all products filtered by brand name
+    description: Returns a list of products that belong to the specified brand.
+    tags:
+      - Product
+    parameters:
+      - in: path
+        name: brand
+        required: true
+        schema:
+          type: string
+        example: Samsung
+    responses:
+      200:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      price:
+                        type: number
+                      url_image:
+                        type: string
+            example:
+              data:
+                - id: 2
+                  name: "Galaxy S23"
+                  price: 6999
+                  url_image: "https://cdn.pixabay.com/photo/2017/11/15/16/20/iphone-2854317_1280.png"
+                - id: 3
+                  name: "Galaxy Z Fold"
+                  price: 9999
+                  url_image: "https://images.unsplash.com/photo-1623126908029-58cb08a2b272"
+      400:
+        description: Brand parameter is required.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Brand parameter is required.
+      404:
+        description: No products found for this brand.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: No products found for this brand.
+      500:
+        description: Internal server error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+            example:
+              error: Internal server error.
+
