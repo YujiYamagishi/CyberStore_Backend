@@ -3,7 +3,7 @@
     summary: Get total products and names by brand
     tags:
       - Product
-    description: List of brands with total products
+    description: List of brands with total products.
     responses:
       200:
 
@@ -30,7 +30,7 @@
                 - brand: "Xiaomi"
                   total: 5
       500:
-        description: Internal server error
+        description: Internal server error.
         content:
           application/json:
             schema:
@@ -39,4 +39,4 @@
                 error:
                   type: string
             example:
-              error: "Internal server error"
+              error: Internal server error.

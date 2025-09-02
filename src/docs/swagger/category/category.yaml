@@ -3,7 +3,7 @@
     summary: List all categories
     tags:
       - Category
-    description: List of all categories
+    description: List of all categories.
     responses:
       200:
         content:
@@ -17,8 +17,8 @@
                     type: string
             example:
               categories: ["Smartphones", "Tablets", "Notebooks"]
-      404:
-        description: Categories not found
+      500:
+        description: Internal server error.
         content:
           application/json:
             schema:
@@ -27,4 +27,4 @@
                 error:
                   type: string
             example:
-              error: "Categories not found"
+              error: Internal server error.
