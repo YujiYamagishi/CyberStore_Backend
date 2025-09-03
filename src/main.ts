@@ -20,6 +20,8 @@ import { ReviewRepositoryPrisma } from "./infra/repositories/review/review.repos
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJsdoc from "swagger-jsdoc"
 import { swaggerOptions } from "./docs/swagger/swagger-config";
+import { ListProductByCategoryUseCase } from "./usecases/product/listByCategory.usecase";
+import { ListProductByCategoryRoute } from "./infra/api/express/routes/product/listByCategory.express";
 
 function main() {
 
@@ -47,7 +49,10 @@ function main() {
     const listRatingByProductIdUseCase = ListRatingByProductIdUseCase.create(reviewRepository);
     const listRatingByProductIdRoute = ListRatingByProductIdRoute.create(listRatingByProductIdUseCase);
 
-    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute, listRatingByProductIdRoute, listReviewsByProductIdRoute]);
+    const listProductsByCategoryUseCase = ListProductByCategoryUseCase.create(productRepository);
+    const listProductsByCategoryRoute = ListProductByCategoryRoute.create(listProductsByCategoryUseCase)
+
+    const api = ApiExpress.create([listRoute, listProductByTagRoute, listProductByIdRoute, listProductsByBrandRoute, getBrandTotalsRoute, listRatingByProductIdRoute, listReviewsByProductIdRoute, listProductsByCategoryRoute]);
     const specs = swaggerJsdoc(swaggerOptions);
     api.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
     const port = 8000;

@@ -134,4 +134,82 @@ export class ProductRepositoryPrisma implements ProductGateway {
         return productList;
     }
 
+    public async listByCategory(
+        category: string,
+        page: number = 1,
+        limit: number = 9,
+        sort: string = "",
+        order: string = "",
+        brands: string[] = []
+    ): Promise<{
+        data: Product[];
+        metadata: {
+            total_pages: number;
+            actual_page: number;
+            total_items: number;
+            per_page: number;
+        };
+    }> {
+        const skip = (page - 1) * limit;
+
+        const allowedSortFields = ["price", "name"];
+        const allowedOrder = ["asc", "desc"];
+
+        const sortField = allowedSortFields.includes(sort) ? sort : "";
+        const sortOrder = allowedOrder.includes(order) ? order : "";
+
+        const whereClause: any = {
+            category: {
+                name: {
+                    equals: category,
+                },
+            },
+        };
+
+        if (brands.length > 0) {
+            whereClause.brand = {
+                in: brands,
+            };
+        }
+
+        const totalItems = await this.prismaClient.product.count({
+            where: whereClause,
+        });
+
+        const products = await this.prismaClient.product.findMany({
+            where: whereClause,
+            skip,
+            take: limit,
+            ...(sortField && sortOrder ? { orderBy: { [sortField]: sortOrder } } : {}),
+        });
+
+        const productList = products.map((p) =>
+            Product.with({
+                id: p.id,
+                name: p.name,
+                description: p.description,
+                brand: p.brand,
+                price: Number(p.price),
+                discounted_price: Number(p.discounted_price),
+                stock: p.stock,
+                url_image: p.url_image,
+                created_at: p.created_at,
+                updated_at: p.update_at,
+                id_category: p.id_category,
+                tag: p.tag,
+                id_specs_smartphone: p.id_specs_smartphone,
+            })
+        );
+
+        return {
+            data: productList,
+            metadata: {
+                total_pages: Math.ceil(totalItems / limit),
+                actual_page: page,
+                total_items: totalItems,
+                per_page: limit,
+            },
+        };
+    }
+
 }
