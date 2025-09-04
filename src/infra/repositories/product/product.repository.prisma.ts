@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Product } from "../../../domain/product/entity/product";
 import { ProductGateway } from "../../../domain/product/gateway/product.gateway";
-import { SmartphoneSpecDto } from "../../../usecases/product/listById.usecase";
+import { SmartphoneSpecDto } from "../../../usecases/product/list-by-id.usecase";
 import { BrandTotal } from "../../../domain/brand/entity/brand-total.entity";
 
 export class ProductRepositoryPrisma implements ProductGateway {

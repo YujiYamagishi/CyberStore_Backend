@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
-import { ListProductByIdUseCase, ListProductByIdOutputDto } from "../../../../../usecases/product/listById.usecase";
+import { ListProductByIdUseCase, ListProductByIdOutputDto } from "../../../../../usecases/product/list-by-id.usecase";
 
 export class ListProductByIdRoute implements Route {
     private readonly path: string;

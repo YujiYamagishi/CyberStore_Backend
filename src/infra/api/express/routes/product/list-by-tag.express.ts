@@ -1,59 +1,56 @@
 import { Request, Response } from "express";
-import { ListProductsByBrandOutputDto, ListProductsByBrandUseCase } from "../../../../../usecases/product/listByBrand.usecase";
-import { HttpMethod, Route } from "../route";
+import { ListProductByOutputTagDto, ListProductByTagUseCase } from "../../../../../usecases/product/list-by-tag.usecase";
+import { HttpMethod, Route } from "../route"
+import { promises } from "dns";
 
-export type ListProductsByBrandResponseDto = {
+
+export type ListProductByTagResponseDto = {
     data: {
         id: number;
         name: string;
         price: number;
+        tag: string;
         url_image: string
     }[]
 }
 
-export class ListProductsByBrandRoute implements Route {
+export class ListProductByTagRoute implements Route {
     private readonly path: string;
     private readonly method: HttpMethod;
-    private readonly listProductsByBrandService: ListProductsByBrandUseCase;
+    private readonly listProductByTagService: ListProductByTagUseCase;
+
 
     private constructor(
         path: string,
         method: HttpMethod,
-        listProductsByBrandService: ListProductsByBrandUseCase,
+        listProductByTagService: ListProductByTagUseCase
     ) {
         this.path = path;
         this.method = method;
-        this.listProductsByBrandService = listProductsByBrandService;
+        this.listProductByTagService = listProductByTagService;
     }
 
-    public static create(listProductsByBrandService: ListProductsByBrandUseCase): ListProductsByBrandRoute {
-        return new ListProductsByBrandRoute(
-            "/api/products/related/:brand",
+    public static create(listProductByTagService: ListProductByTagUseCase): ListProductByTagRoute {
+        return new ListProductByTagRoute(
+            "/api/products/tag/:tag",
             HttpMethod.GET,
-            listProductsByBrandService
+            listProductByTagService
         );
     }
 
     public getHandler() {
         return async (request: Request, response: Response): Promise<void> => {
             try {
-                const { brand } = request.params;
+                const { tag } = request.params;
 
-                if (!brand) {
+                if (!tag) {
                     response.status(400).json({
-                        error: "Brand parameter is required."
+                        error: "Tag parameter is required."
                     });
                     return;
                 }
 
-                const output = await this.listProductsByBrandService.execute({ brand });
-
-                if (!output || !output.products || output.products.length === 0) {
-                    response.status(404).json({
-                        error: "No products found for this brand."
-                    });
-                    return;
-                }
+                const output = await this.listProductByTagService.execute({ tag });
 
                 const responseBody = this.present(output);
 
@@ -74,15 +71,19 @@ export class ListProductsByBrandRoute implements Route {
         return this.method;
     }
 
-    private present(input: ListProductsByBrandOutputDto): ListProductsByBrandResponseDto {
+    private present(input: ListProductByOutputTagDto): ListProductByTagResponseDto {
         return {
             data: input.products.map(product => ({
                 id: product.id as number,
                 name: product.name,
                 price: product.price,
+                tag: product.tag,
                 url_image: product.url_image
             }))
         }
     }
 
 }
+
+
+
