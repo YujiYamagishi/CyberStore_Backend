@@ -19,11 +19,11 @@ export interface ProductGateway {
     listByBrand(brand: string): Promise<Product[]>;
     getBrandTotals(): Promise<BrandTotal[]>;
     listByCategory(
-        category: string,
-        page?: number,
-        limit?: number,
-        sort?: string,
-        order?: string,
-        brands?: string[]
-    ): Promise<ListProductByCategoryOutputDto>;
+        input: 
+        { category: string; 
+            page: number; 
+            limit: number; 
+            sort: string; 
+            order: string; 
+            brands?: string[] | undefined }): Promise<ListProductByCategoryOutputDto>;
 }

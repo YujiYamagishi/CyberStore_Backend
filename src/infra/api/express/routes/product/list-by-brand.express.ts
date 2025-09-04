@@ -7,7 +7,8 @@ export type ListProductsByBrandResponseDto = {
         id: number;
         name: string;
         price: number;
-        url_image: string
+        original_price?: number | undefined;
+        url_image: string;
     }[]
 }
 
@@ -28,7 +29,7 @@ export class ListProductsByBrandRoute implements Route {
 
     public static create(listProductsByBrandService: ListProductsByBrandUseCase): ListProductsByBrandRoute {
         return new ListProductsByBrandRoute(
-            "/api/products/related/:brand",
+            "/api/products/brand/:brand",
             HttpMethod.GET,
             listProductsByBrandService
         );
@@ -77,12 +78,12 @@ export class ListProductsByBrandRoute implements Route {
     private present(input: ListProductsByBrandOutputDto): ListProductsByBrandResponseDto {
         return {
             data: input.products.map(product => ({
-                id: product.id as number,
+                id: product.id,
                 name: product.name,
                 price: product.price,
+                original_price: product.original_price,
                 url_image: product.url_image
             }))
         }
     }
-
 }

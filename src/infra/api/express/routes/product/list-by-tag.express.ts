@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
-import { ListProductByOutputTagDto, ListProductByTagUseCase } from "../../../../../usecases/product/list-by-tag.usecase";
-import { HttpMethod, Route } from "../route"
-import { promises } from "dns";
-
+import { ListProductByTagOutputDto, ListProductByTagUseCase } from "../../../../../usecases/product/list-by-tag.usecase";
+import { HttpMethod, Route } from "../route";
 
 export type ListProductByTagResponseDto = {
     data: {
         id: number;
         name: string;
         price: number;
+        original_price?: number | undefined;
         tag: string;
-        url_image: string
+        url_image: string;
     }[]
 }
 
@@ -18,7 +17,6 @@ export class ListProductByTagRoute implements Route {
     private readonly path: string;
     private readonly method: HttpMethod;
     private readonly listProductByTagService: ListProductByTagUseCase;
-
 
     private constructor(
         path: string,
@@ -71,19 +69,16 @@ export class ListProductByTagRoute implements Route {
         return this.method;
     }
 
-    private present(input: ListProductByOutputTagDto): ListProductByTagResponseDto {
+    private present(input: ListProductByTagOutputDto): ListProductByTagResponseDto {
         return {
             data: input.products.map(product => ({
-                id: product.id as number,
+                id: product.id,
                 name: product.name,
                 price: product.price,
+                original_price: product.original_price,
                 tag: product.tag,
                 url_image: product.url_image
             }))
         }
     }
-
 }
-
-
-

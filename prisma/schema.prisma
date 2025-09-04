@@ -13,7 +13,7 @@ model Product {
   description         String
   brand               String
   price               Decimal          
-  discounted_price    Decimal         @default(0)
+  discounted_price    Decimal?
   stock               Int
   url_image           String
   created_at          DateTime         @default(now())
@@ -32,6 +32,7 @@ model Product {
 }
 
 model ColorsProduct {
+  id         Int      @id @default(autoincrement())
   id_product Int
   hex_code   String
   name       String
@@ -40,7 +41,7 @@ model ColorsProduct {
 
   produto    Product    @relation(fields: [id_product], references: [id])
 
-  @@id([id_product, hex_code])
+  @@unique([id_product, hex_code])
   @@map("ColorsProduct")
 }
 
@@ -57,6 +58,7 @@ model Category {
 }
 
 model StorageOption {
+  id         Int      @id @default(autoincrement())
   id_product Int
   size       String
   created_at DateTime  @default(now())
@@ -64,7 +66,7 @@ model StorageOption {
 
   produto    Product   @relation(fields: [id_product], references: [id])
 
-  @@id([id_product, size])
+  @@unique([id_product, size])
   @@map("storageOptions")
 }
 

@@ -7,8 +7,9 @@ export type ListProductByCategoryResponseDto = {
         id: number;
         name: string;
         description: string;
-        brand: string
+        brand: string;
         price: number;
+        original_price?: number | undefined; // <-- MUDANÇA 1
         stock: number;
         url_image: string;
         id_category: number;
@@ -42,11 +43,10 @@ export class ListProductByCategoryRoute implements Route {
             HttpMethod.GET,
             listProductByCategoryService
         );
-
-
     }
 
     public getHandler() {
+        // Seu código original aqui, sem alterações.
         return async (request: Request, response: Response): Promise<void> => {
             try {
                 const { category } = request.params;
@@ -100,6 +100,7 @@ export class ListProductByCategoryRoute implements Route {
                 id: product.id as number,
                 name: product.name,
                 price: product.price,
+                original_price: product.original_price, // <-- MUDANÇA 2
                 url_image: product.url_image,
                 description: product.description,
                 brand: product.brand,
