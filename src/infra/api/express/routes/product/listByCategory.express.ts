@@ -79,7 +79,6 @@ export class ListProductByCategoryRoute implements Route {
 
                 response.status(200).json(responseBody);
             } catch (error) {
-                console.error("Error in ListProductByCategoryRoute", error);
                 response.status(500).json({
                     error: "Internal server error"
                 });
