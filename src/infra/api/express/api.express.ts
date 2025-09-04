@@ -2,11 +2,17 @@ import type { Api } from "../api";
 import * as express from "express";
 import type { Express } from "express";
 import type { Route } from "./routes/route";
+import * as cors from "cors";
 export class ApiExpress implements Api {
     public app: Express;
 
     private constructor(routes: Route[]) {
         this.app = express();
+
+        const corsOptions = {
+            "origin" : 'http://localhost:5173'
+        }
+        this.app.use(cors(corsOptions));
         this.app.use(express.json());
         this.addRoutes(routes);
         this.listRoutes();
