@@ -10,6 +10,10 @@ export type ColorProductProps = {
 export class ColorProduct {
     private constructor(private props: ColorProductProps) { }
 
+    public static with(props: ColorProductProps) {
+        return new ColorProduct(props);
+    }
+
     public get id() {
         return this.props.id;
     }

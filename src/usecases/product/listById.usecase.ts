@@ -1,5 +1,6 @@
 import { Product } from "../../domain/product/entity/product";
 import { ProductGateway } from "../../domain/product/gateway/product.gateway";
+import { ColorProductDto, ListColorByProductIdUseCase } from "../color-product/list-color-by-product-id.usecase";
 import { Usecase } from "../usecase";
 
 export type ListProductByIdInputDto = {
@@ -31,28 +32,33 @@ export type ListProductByIdOutputDto = {
         updated_at?: Date | undefined;
         id_category: number;
         tag: string;
-        id_specs_smartphone?: number | null ;
+        id_specs_smartphone?: number | null;
         smartphoneSpec?: SmartphoneSpecDto | null;
     }
 };
 
 export class ListProductByIdUseCase implements Usecase<ListProductByIdInputDto, ListProductByIdOutputDto> {
-    private constructor(private readonly productGateway: ProductGateway) { }
+    private constructor(private readonly productGateway: ProductGateway,
+        private readonly listColorByProductIdUseCase: ListColorByProductIdUseCase
+    ) { }
 
-    public static create(productGateway: ProductGateway) {
-        return new ListProductByIdUseCase(productGateway);
+    public static create(productGateway: ProductGateway, listColorByProductIdUseCase: ListColorByProductIdUseCase): ListProductByIdUseCase {
+        return new ListProductByIdUseCase(productGateway, listColorByProductIdUseCase);
     }
 
     public async execute(input: ListProductByIdInputDto): Promise<ListProductByIdOutputDto | null> {
         const { product, smartphoneSpec } = await this.productGateway.listById(input.id);
 
         if (!product) {
-           return null;
+            return null;
         }
-        return this.presentOutput(product, smartphoneSpec);
+
+        const colorResult = await this.listColorByProductIdUseCase.execute({ id_product: product.id! });
+        const colors = colorResult?.colors || [];
+        return this.presentOutput(product, smartphoneSpec, colors);
     }
 
-    private presentOutput(product: Product, smartphoneSpec?: SmartphoneSpecDto | null): ListProductByIdOutputDto {
+    private presentOutput(product: Product, smartphoneSpec?: SmartphoneSpecDto | null, colors: ColorProductDto[] = []): ListProductByIdOutputDto {
         const base = {
             id: product.id!,
             name: product.name,
@@ -66,6 +72,7 @@ export class ListProductByIdUseCase implements Usecase<ListProductByIdInputDto, 
             updated_at: product.updated_at,
             id_category: product.id_category,
             tag: product.tag,
+            colors,
             id_specs_smartphone: product.id_specs_smartphone ?? null,
         };
 

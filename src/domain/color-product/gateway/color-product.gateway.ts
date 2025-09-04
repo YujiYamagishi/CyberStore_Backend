@@ -1,7 +1,7 @@
 import { ColorProduct } from "../entity/color-product";
 
 export interface ColorProductGateway{
-    list(): Promise<ColorProduct[]>;
+    listByProductId(product_id: number): Promise<ColorProduct[] | null>;
 
 }
 

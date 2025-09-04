@@ -22,12 +22,15 @@ import * as swaggerJsdoc from "swagger-jsdoc"
 import { swaggerOptions } from "./docs/swagger/swagger-config";
 import { ListProductByCategoryUseCase } from "./usecases/product/listByCategory.usecase";
 import { ListProductByCategoryRoute } from "./infra/api/express/routes/product/listByCategory.express";
+import { ColorProductRepositoryPrisma } from "./infra/repositories/color-product/color-product.repository.prisma";
+import { ListColorByProductIdUseCase } from "./usecases/color-product/list-color-by-product-id.usecase";
 
 function main() {
 
     const aRepository = CategoryRepositoryPrisma.create(prisma);
     const productRepository = ProductRepositoryPrisma.create(prisma);
     const reviewRepository = ReviewRepositoryPrisma.create(prisma);
+    const listColorByProductIdUseCase = ListColorByProductIdUseCase.create(ColorProductRepositoryPrisma.create(prisma));
 
     const listCategoryUsecase = ListCategoryUseCase.create(aRepository);
     const listProductByTagUsecase = ListProductByTagUseCase.create(productRepository);
@@ -36,7 +39,7 @@ function main() {
     const listRoute = ListCategoryRoute.create(listCategoryUsecase);
     const listProductByTagRoute = ListProductByTagRoute.create(listProductByTagUsecase);
 
-    const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository);
+    const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository, listColorByProductIdUseCase);
     const listProductByIdRoute = ListProductByIdRoute.create(listProductByIdUsecase);
     const listReviewsByProductIdRoute = ListReviewsByProductIdRoute.create(listReviewsByProductIdUseCase);
 
