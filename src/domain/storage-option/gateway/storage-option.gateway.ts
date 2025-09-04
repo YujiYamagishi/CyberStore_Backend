@@ -1,7 +1,6 @@
 import { StorageOption } from "../entity/storage-option";
 
 export interface StorageOptionGateway{
-    list(): Promise<StorageOption[]>;
-
+    listByProductId(product_id: number): Promise<StorageOption[] | null>;
 }
 

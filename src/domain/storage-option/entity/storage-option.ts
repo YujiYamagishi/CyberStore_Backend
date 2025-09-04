@@ -7,7 +7,11 @@ export type StorageOptionProps = {
 };
 
 export class StorageOption {
-    private constructor(private props: StorageOptionProps) {}
+    private constructor(private props: StorageOptionProps) { }
+
+    public static with(props: StorageOptionProps) {
+        return new StorageOption(props);
+    }
 
     public get id() {
         return this.props.id;

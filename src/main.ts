@@ -24,6 +24,8 @@ import { ListProductByCategoryUseCase } from "./usecases/product/list-by-categor
 import { ListProductByCategoryRoute } from "./infra/api/express/routes/product/list-by-category.express";
 import { ColorProductRepositoryPrisma } from "./infra/repositories/color-product/color-product.repository.prisma";
 import { ListColorByProductIdUseCase } from "./usecases/color-product/list-color-by-product-id.usecase";
+import { ListStorageOptionByProductIdIUseCase } from "./usecases/storage-option/list-storage-option-by-product-id.usecase";
+import { StorageOptionRepositoryPrisma } from "./infra/repositories/storage-option/storage-option.repository.prisma";
 
 function main() {
 
@@ -31,6 +33,7 @@ function main() {
     const productRepository = ProductRepositoryPrisma.create(prisma);
     const reviewRepository = ReviewRepositoryPrisma.create(prisma);
     const listColorByProductIdUseCase = ListColorByProductIdUseCase.create(ColorProductRepositoryPrisma.create(prisma));
+    const listStorageOptionByProductIdIUseCase = ListStorageOptionByProductIdIUseCase.create(StorageOptionRepositoryPrisma.create(prisma));
 
     const listCategoryUsecase = ListCategoryUseCase.create(aRepository);
     const listProductByTagUsecase = ListProductByTagUseCase.create(productRepository);
@@ -39,7 +42,7 @@ function main() {
     const listRoute = ListCategoryRoute.create(listCategoryUsecase);
     const listProductByTagRoute = ListProductByTagRoute.create(listProductByTagUsecase);
 
-    const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository, listColorByProductIdUseCase);
+    const listProductByIdUsecase = ListProductByIdUseCase.create(productRepository, listColorByProductIdUseCase, listStorageOptionByProductIdIUseCase);
     const listProductByIdRoute = ListProductByIdRoute.create(listProductByIdUsecase);
     const listReviewsByProductIdRoute = ListReviewsByProductIdRoute.create(listReviewsByProductIdUseCase);
 
