@@ -1,15 +1,15 @@
 import { ApiExpress } from "./infra/api/express/api.express";
 import { ListCategoryRoute } from "./infra/api/express/routes/category/list.express.route";
-import { ListProductsByBrandRoute } from "./infra/api/express/routes/product/listByBrand.express";
-import { ListProductByIdRoute } from "./infra/api/express/routes/product/listById.express";
-import { ListProductByTagRoute } from "./infra/api/express/routes/product/listByTag.express";
+import { ListProductsByBrandRoute } from "./infra/api/express/routes/product/list-by-brand.express";
+import { ListProductByIdRoute } from "./infra/api/express/routes/product/list-by-id.express";
+import { ListProductByTagRoute } from "./infra/api/express/routes/product/list-by-tag.express";
 import { CategoryRepositoryPrisma } from "./infra/repositories/category/category.repository.prisma";
 import { ProductRepositoryPrisma } from "./infra/repositories/product/product.repository.prisma";
 import { prisma } from "./package/prisma";
 import { ListCategoryUseCase } from "./usecases/category/list.usecase";
-import { ListProductsByBrandUseCase } from "./usecases/product/listByBrand.usecase";
-import { ListProductByIdUseCase } from "./usecases/product/listById.usecase";
-import { ListProductByTagUseCase } from "./usecases/product/listByTag.usecase";
+import { ListProductsByBrandUseCase } from "./usecases/product/list-by-brand.usecase";
+import { ListProductByIdUseCase } from "./usecases/product/list-by-id.usecase";
+import { ListProductByTagUseCase } from "./usecases/product/list-by-tag.usecase";
 import { GetBrandTotalsUseCase } from "./usecases/brand/get-brands-total.use-case";
 import { GetBrandTotalsRoute } from "./infra/api/express/routes/brand/get-brand-totals.express.route";
 import { ListRatingByProductIdUseCase } from "./usecases/review/list-rating-by-product-id.usecase"; 
@@ -20,8 +20,8 @@ import { ReviewRepositoryPrisma } from "./infra/repositories/review/review.repos
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJsdoc from "swagger-jsdoc"
 import { swaggerOptions } from "./docs/swagger/swagger-config";
-import { ListProductByCategoryUseCase } from "./usecases/product/listByCategory.usecase";
-import { ListProductByCategoryRoute } from "./infra/api/express/routes/product/listByCategory.express";
+import { ListProductByCategoryUseCase } from "./usecases/product/list-by-category.usecase";
+import { ListProductByCategoryRoute } from "./infra/api/express/routes/product/list-by-category.express";
 import { ColorProductRepositoryPrisma } from "./infra/repositories/color-product/color-product.repository.prisma";
 import { ListColorByProductIdUseCase } from "./usecases/color-product/list-color-by-product-id.usecase";
 

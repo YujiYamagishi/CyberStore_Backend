@@ -1,4 +1,4 @@
-import { SmartphoneSpecDto } from "../../../usecases/product/listById.usecase";
+import { SmartphoneSpecDto } from "../../../usecases/product/list-by-id.usecase";
 import { BrandTotal } from "../../brand/entity/brand-total.entity";
 import { Product } from "../entity/product";
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ListProductByCategoryOutputDto, ListProductByCategoryUseCase } from "../../../../../usecases/product/listByCategory.usecase";
+import { ListProductByCategoryOutputDto, ListProductByCategoryUseCase } from "../../../../../usecases/product/list-by-category.usecase";
 import { HttpMethod, Route } from "../route";
 
 export type ListProductByCategoryResponseDto = {
