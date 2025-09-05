@@ -44,7 +44,7 @@ async function main() {
     await prisma.product.createMany({
         data: [
             // PHONES (30+)
-            { id: 1, name: 'iPhone 15 Pro', description: 'Apple Titan-Grade Smartphone with A17 Pro Chip.', brand: 'Apple', price: 9299, stock: 50, url_image: 'https://source.unsplash.com/random/800x600?iphone,pro', tag: 'bestseller', id_category: 1, id_specs_smartphone: 1 },
+            { id: 1, name: 'iPhone 15 Pro', description: 'Apple Titan-Grade Smartphone with A17 Pro Chip.', brand: 'Apple', price: 9299, stock: 50, url_image: 'https://source.unsplash.com/random/800x600?iphone,pro', tag: 'discount_up_to_50', id_category: 1, id_specs_smartphone: 1 },
             { id: 2, name: 'Samsung Galaxy S24 Ultra', description: 'Experience the new era of AI with Galaxy AI.', brand: 'Samsung', price: 8999, discounted_price: 8499, stock: 40, url_image: 'https://source.unsplash.com/random/800x600?samsung,s24,ultra', tag: 'new_arrival', id_category: 1, id_specs_smartphone: 2 },
             { id: 3, name: 'Google Pixel 8 Pro', description: 'The best of Google, with an amazing AI camera.', brand: 'Google', price: 7999, stock: 35, url_image: 'https://source.unsplash.com/random/800x600?google,pixel,pro', tag: 'featured_product', id_category: 1, id_specs_smartphone: 3 },
             { id: 4, name: 'Xiaomi 14 Pro', description: 'Leica professional optics for stunning photos.', brand: 'Xiaomi', price: 5499, discounted_price: 5199, stock: 30, url_image: 'https://source.unsplash.com/random/800x600?xiaomi,phone', tag: 'new_arrival', id_category: 1, id_specs_smartphone: 4 },
@@ -59,7 +59,7 @@ async function main() {
             // NOTEBOOKS (10+)
             { id: 101, name: 'MacBook Pro 14" M3', description: 'Apple professional laptop with M3 Pro chip.', brand: 'Apple', price: 18499, stock: 15, url_image: 'https://source.unsplash.com/random/800x600?macbook,pro', tag: 'bestseller', id_category: 2 },
             { id: 102, name: 'Dell XPS 15', description: 'Powerful and elegant laptop for creators.', brand: 'Dell', price: 14999, discounted_price: 14499, stock: 20, url_image: 'https://source.unsplash.com/random/800x600?dell,xps', tag: 'featured_product', id_category: 2 },
-            ...Array.from({ length: 8 }, (_, i) => ({ id: 103 + i, name: `Laptop Model ${i + 1}`, description: `A great laptop from Brand ${i % 4 + 1}`, brand: ['HP', 'Lenovo', 'Asus', 'Microsoft'][i % 4], price: 4999 + i * 300, discounted_price: (i % 2 === 0) ? 4799 + i * 300 : undefined, stock: 30 + i * 3, url_image: `https://source.unsplash.com/random/800x600?laptop,${['HP', 'Lenovo', 'Asus', 'Microsoft'][i % 4]}`, tag: 'new_arrival', id_category: 2 })),
+            ...Array.from({ length: 8 }, (_, i) => ({ id: 103 + i, name: `Laptop Model ${i + 1}`, description: `A great laptop from Brand ${i % 4 + 1}`, brand: ['HP', 'Lenovo', 'Asus', 'Microsoft'][i % 4], price: 4999 + i * 300, discounted_price: (i % 2 === 0) ? 4799 + i * 300 : undefined, stock: 30 + i * 3, url_image: `https://source.unsplash.com/random/800x600?laptop,${['HP', 'Lenovo', 'Asus', 'Microsoft'][i % 4]}`, tag: 'discount_up_to_50', id_category: 2 })),
 
             // TABLETS (10+)
             { id: 201, name: 'iPad Pro 11"', description: 'The ultimate iPad experience with M2 chip.', brand: 'Apple', price: 9799, stock: 30, url_image: 'https://source.unsplash.com/random/800x600?ipad,pro', tag: 'bestseller', id_category: 3 },
@@ -88,7 +88,7 @@ async function main() {
             ...Array.from({ length: 8 }, (_, i) => ({ id: 603 + i, name: `Audio Device ${i + 1}`, description: `A speaker from Brand ${i % 4 + 1}`, brand: ['Bose', 'Marshall', 'Anker', 'Sony'][i % 4], price: 499 + i * 150, stock: 50 + i * 5, url_image: `https://source.unsplash.com/random/800x600?speaker,${['Bose', 'Marshall', 'Anker', 'Sony'][i % 4]}`, tag: 'featured_product', id_category: 7 })),
 
             // SMART WATCHES (10+)
-            { id: 701, name: 'Apple Watch Series 9', description: 'A brighter display and a magical new way to interact.', brand: 'Apple', price: 4999, stock: 80, url_image: 'https://source.unsplash.com/random/800x600?apple,watch', tag: 'bestseller', id_category: 8 },
+            { id: 701, name: 'Apple Watch Series 9', description: 'A brighter display and a magical new way to interact.', brand: 'Apple', price: 4999, stock: 80, url_image: 'https://source.unsplash.com/random/800x600?apple,watch', tag: 'discount_up_to_50', id_category: 8 },
             { id: 702, name: 'Samsung Galaxy Watch 6', description: 'Track your wellness and crush your fitness goals.', brand: 'Samsung', price: 2199, discounted_price: 1999, stock: 60, url_image: 'https://source.unsplash.com/random/800x600?samsung,watch', tag: 'featured_product', id_category: 8 },
             ...Array.from({ length: 8 }, (_, i) => ({ id: 703 + i, name: `Smart Watch ${i + 1}`, description: `A watch from Brand ${i % 4 + 1}`, brand: ['Garmin', 'Fitbit', 'Xiaomi', 'Amazfit'][i % 4], price: 899 + i * 80, stock: 70 + i * 3, url_image: `https://source.unsplash.com/random/800x600?smartwatch,${['Garmin', 'Fitbit', 'Xiaomi', 'Amazfit'][i % 4]}`, tag: 'new_arrival', id_category: 8 })),
         ]
@@ -102,6 +102,8 @@ async function main() {
             // iPhones
             { id_product: 1, hex_code: '#2E4053', name: 'Titanium Blue' },
             { id_product: 1, hex_code: '#F2F3F4', name: 'Titanium White' },
+            { id_product: 1, hex_code: '#FADBD8', name: 'Pink' },
+            { id_product: 1, hex_code: '#D4EFDF', name: 'Green' },
             { id_product: 6, hex_code: '#FADBD8', name: 'Pink' },
             { id_product: 6, hex_code: '#D4EFDF', name: 'Green' },
             // Samsungs
@@ -109,9 +111,17 @@ async function main() {
             { id_product: 2, hex_code: '#D6EAF8', name: 'Sky Blue' },
             { id_product: 5, hex_code: '#FCF3CF', name: 'Cream' },
             { id_product: 9, hex_code: '#85C1E9', name: 'Awesome Blue' },
+            { id_product: 9, hex_code: '#17202A', name: 'Phantom Black' },
+            { id_product: 9, hex_code: '#D6EAF8', name: 'Sky Blue' },
+            { id_product: 9, hex_code: '#FCF3CF', name: 'Cream' },
             // MacBooks
             { id_product: 101, hex_code: '#808080', name: 'Space Gray' },
             { id_product: 101, hex_code: '#D5D8DC', name: 'Silver' },
+
+            { id_product: 3, hex_code: '#2E4053', name: 'Titanium Blue' },
+            { id_product: 3, hex_code: '#F2F3F4', name: 'Titanium White' },
+            { id_product: 3, hex_code: '#FADBD8', name: 'Pink' },
+            { id_product: 3, hex_code: '#D4EFDF', name: 'Green' },
         ]
     });
 
@@ -120,6 +130,7 @@ async function main() {
             // iPhones
             { id_product: 1, size: '256GB' },
             { id_product: 1, size: '512GB' },
+            { id_product: 1, size: '1TB' },
             { id_product: 6, size: '128GB' },
             { id_product: 6, size: '256GB' },
             // Samsungs
@@ -127,24 +138,57 @@ async function main() {
             { id_product: 2, size: '512GB' },
             { id_product: 2, size: '1TB' },
             { id_product: 5, size: '256GB' },
+            { id_product: 9, size: '1TB' },
             // Notebooks
             { id_product: 101, size: '512GB' },
             { id_product: 101, size: '1TB' },
             { id_product: 102, size: '512GB' },
+
+            { id_product: 3, size: '128GB' },
+            { id_product: 3, size: '256GB' },
         ]
     });
-    
+
     await prisma.review.createMany({
         data: [
             { id_product: 1, rating: 5, message: 'Best iPhone yet! The camera is incredible.', name_user: 'Lucas Almeida', url_image_user: 'https://source.unsplash.com/random/100x100?man,portrait' },
             { id_product: 1, rating: 4, message: 'Very fast, but I miss the lightning port.', name_user: 'Beatriz Rocha', url_image_user: 'https://source.unsplash.com/random/100x100?woman,portrait' },
             { id_product: 2, rating: 5, message: 'The zoom on this camera is basically magic.', name_user: 'Carlos Mendes', url_image_user: 'https://source.unsplash.com/random/100x100?person' },
             { id_product: 3, rating: 4, message: 'Pure Android is so good. The phone feels very responsive.', name_user: 'Ana Costa', url_image_user: 'https://source.unsplash.com/random/100x100?woman,face' },
-            { id_product: 101, rating: 5, message: 'M3 Pro handles 4K video editing like a dream. Worth every penny.', name_user: 'João Silva', url_image_user: 'https://source.unsplash.com/random/100x100?man,face' },
+            { id_product: 9, rating: 5, message: 'M3 Pro handles 4K video editing like a dream. Worth every penny.', name_user: 'João Silva', url_image_user: 'https://source.unsplash.com/random/100x100?man,face' },
             { id_product: 102, rating: 4, message: 'Beautiful machine for coding, but it can get a bit hot.', name_user: 'Mariana Souza', url_image_user: 'https://source.unsplash.com/random/100x100?person,face' },
             { id_product: 401, rating: 5, message: 'The slim design looks so much better in my living room.', name_user: 'Ricardo Alves', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
             { id_product: 701, rating: 5, message: 'The double tap gesture is surprisingly useful!', name_user: 'Gabriela Rocha', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
-            ...Array.from({ length: 50 }, (_, i) => ({ id_product: (i % 30) + 1, rating: (i % 5) + 1, message: `This is a generic review number ${i + 1}. The product is okay.`, name_user: ['John Doe', 'Jane Smith', 'Peter Jones', 'Mary Williams'][i % 4], url_image_user: `https://source.unsplash.com/random/100x100?person,${i}` }))
+            { id_product: 401, rating: 4, message: 'Fast loading times and smooth gameplay.', name_user: 'Renata Ribeiro', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 9, rating: 5, message: 'Xbox Game Pass is amazing on this!', name_user: 'André Monteiro', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 402, rating: 4, message: 'Powerful console for 4K gaming.', name_user: 'Simone Nunes', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 3, rating: 5, message: 'Perfect for portable gaming!', name_user: 'Paulo Gomes', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 403, rating: 4, message: 'Great for family gaming sessions.', name_user: 'Luciana Ferreira', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 501, rating: 5, message: 'OLED picture quality is mind-blowing!', name_user: 'Carlos Castro', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 3, rating: 4, message: 'Great for movie nights at home.', name_user: 'Helena Miranda', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 3, rating: 5, message: 'LG makes the best OLED TVs!', name_user: 'Mauricio Santos', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 9, rating: 4, message: 'Excellent for sports and gaming.', name_user: 'Elaine Costa', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 101, rating: 5, message: 'M3 chip is a beast for video editing!', name_user: 'Rodrigo Santos', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 3, rating: 4, message: 'Excellent build quality and performance.', name_user: 'Amanda Costa', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 102, rating: 5, message: 'Beautiful design and great keyboard.', name_user: 'Fabio Oliveira', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 102, rating: 4, message: 'Good for creative work and programming.', name_user: 'Cristina Silva', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 101, rating: 5, message: 'Perfect tablet for drawing and note-taking.', name_user: 'Alexandre Pereira', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 3, rating: 4, message: 'Great iPad for professionals.', name_user: 'Monique Alves', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 102, rating: 5, message: 'AMOLED screen is absolutely stunning!', name_user: 'Diego Souza', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 202, rating: 4, message: 'Good alternative to iPad for Android users.', name_user: 'Bianca Rodrigues', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 9, rating: 5, message: 'Noise cancellation is incredible!', name_user: 'Vinicios Lima', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 301, rating: 4, message: 'Comfortable for long listening sessions.', name_user: 'Débora Martins', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 9, rating: 5, message: 'Best headphones I have ever owned!', name_user: 'Roberto Barbosa', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 1, rating: 3, message: 'Battery life could be better for the price.', name_user: 'Carlos Mendonça', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 2, rating: 2, message: 'Too big and heavy for daily use.', name_user: 'Fernanda Lima', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 1, rating: 3, message: 'Heats up too much during gaming.', name_user: 'Ricardo Santos', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 1, rating: 1, message: 'Camera quality not as advertised.', name_user: 'Patricia Oliveira', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 5, rating: 2, message: 'Foldable screen developed cracks after 2 months.', name_user: 'Marcos Silva', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 1, rating: 3, message: 'Charging is slower than expected.', name_user: 'Juliana Costa', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 7, rating: 2, message: 'Software bugs need to be fixed.', name_user: 'Roberto Almeida', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 8, rating: 1, message: 'External screen stopped working after update.', name_user: 'Camila Rodrigues', url_image_user: 'https://source.unsplash.com/random/100x100?woman' },
+            { id_product: 9, rating: 3, message: 'Performance drops after heavy usage.', name_user: 'Thiago Pereira', url_image_user: 'https://source.unsplash.com/random/100x100?man' },
+            { id_product: 9, rating: 0, message: 'Gaming features overhyped, average performance.', name_user: 'Vanessa Souza', url_image_user: 'https://source.unsplash.com/random/100x100?woman' }
         ]
     });
 
