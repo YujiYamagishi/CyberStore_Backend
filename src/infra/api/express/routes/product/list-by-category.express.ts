@@ -9,7 +9,7 @@ export type ListProductByCategoryResponseDto = {
         description: string;
         brand: string;
         price: number;
-        original_price?: number | undefined; // <-- MUDANÇA 1
+        original_price?: number | undefined; 
         stock: number;
         url_image: string;
         id_category: number;
@@ -46,18 +46,17 @@ export class ListProductByCategoryRoute implements Route {
     }
 
     public getHandler() {
-        // Seu código original aqui, sem alterações.
         return async (request: Request, response: Response): Promise<void> => {
             try {
                 const { category } = request.params;
-                const {sort, order} = request.query;
+                const { sort, order } = request.query;
                 const filters = request.body?.filters ?? {};
 
                 const page = parseInt(request.query.page as string) || 1;
                 const validatedPage = page < 1 ? 1 : page;
 
                 const limit = parseInt(request.query.limit as string) || 9;
-                const validatedLimit = limit < 1 ? 9 : limit; 
+                const validatedLimit = limit < 1 ? 9 : limit;
 
                 if (!category) {
                     response.status(400).json({
@@ -66,13 +65,17 @@ export class ListProductByCategoryRoute implements Route {
                     return
                 }
 
+                const brandsQuery = (request.query.brands as string)?.split(",") ?? [];
+                const brands = brandsQuery.length ? brandsQuery : filters?.brands ?? [];
+
+
                 const output = await this.listProductByCategoryService.execute({
                     category,
                     page: validatedPage,
                     limit: validatedLimit,
-                    sort: sort as string ,
+                    sort: sort as string,
                     order: order as string,
-                    brands: filters?.brands ?? []
+                    brands
                 });
 
                 const responseBody = this.present(output);
@@ -100,7 +103,7 @@ export class ListProductByCategoryRoute implements Route {
                 id: product.id as number,
                 name: product.name,
                 price: product.price,
-                original_price: product.original_price, // <-- MUDANÇA 2
+                original_price: product.original_price, 
                 url_image: product.url_image,
                 description: product.description,
                 brand: product.brand,
