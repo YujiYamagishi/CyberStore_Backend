@@ -1,7 +1,7 @@
 /api/product/{id}:
   get:
     summary: Get product by ID
-    description:  Returns the details of a product for the given ID, including all main attributes and specifications.
+    description: Returns the details of a product for the given ID, including all main attributes, specifications, available colors, and storage options.
     tags:
       - Product
     parameters:
@@ -17,7 +17,7 @@
             schema:
               type: object
               properties:
-                data:
+                products:
                   type: object
                   properties:
                     id:
@@ -29,8 +29,6 @@
                     brand:
                       type: string
                     price:
-                      type: number
-                    discounted_price:
                       type: number
                     stock:
                       type: integer
@@ -46,6 +44,19 @@
                       type: integer
                     tag:
                       type: string
+                    colors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          hex_code:
+                            type: string
+                          name:
+                            type: string
+                    storageOptions:
+                      type: array
+                      items:
+                        type: string
                     id_specs_smartphone:
                       type: integer
                       nullable: true
@@ -72,21 +83,41 @@
                           type: string
                           format: date-time
             example:
-              data:
-                id: 16
-                name: "iPad Pro"
-                description: "Apple tablet with M2 chip and Liquid Retina display"
+              products:
+                id: 1
+                name: "iPhone 15 Pro"
+                description: "Apple Titan-Grade Smartphone with A17 Pro Chip."
                 brand: "Apple"
-                price: 7999
-                discounted_price: 7499
-                stock: 25
-                url_image: "https://images.unsplash.com/photo-1623126908029-58cb08a2b272"
-                created_at: "2025-08-29T17:43:00.082Z"
-                updated_at: "2025-08-29T17:43:00.082Z"
-                id_category: 3
-                tag: "bestseller"
-                id_specs_smartphone: null
-                smartphoneSpec: null
+                price: 9299
+                stock: 50
+                url_image: "https://source.unsplash.com/random/800x600?iphone,pro"
+                created_at: "2025-09-05T16:33:11.451Z"
+                updated_at: "2025-09-05T16:33:11.451Z"
+                id_category: 1
+                tag: "discount_up_to_50"
+                colors:
+                  - hex_code: "#2E4053"
+                    name: "Titanium Blue"
+                  - hex_code: "#D4EFDF"
+                    name: "Green"
+                  - hex_code: "#F2F3F4"
+                    name: "Titanium White"
+                  - hex_code: "#FADBD8"
+                    name: "Pink"
+                storageOptions:
+                  - "1TB"
+                  - "256GB"
+                  - "512GB"
+                id_specs_smartphone: 1
+                smartphoneSpec:
+                  screen_size: "6.1 inch"
+                  cpu: "A17 Pro"
+                  total_cores: "6 cores"
+                  main_camera: "48MP"
+                  front_camera: "12MP"
+                  battery: "3274mAh"
+                  created_at: "2025-09-05T16:33:11.370Z"
+                  updated_at: "2025-09-05T16:33:11.370Z"
       400:
         description: Id parameter is required.
         content:
