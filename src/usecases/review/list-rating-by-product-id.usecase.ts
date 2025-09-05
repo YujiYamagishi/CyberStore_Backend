@@ -41,7 +41,7 @@ export class ListRatingByProductIdUseCase implements Usecase<ListRatingByProduct
             average: rating.filter(r => r === 3).length,
             below_average: rating.filter(r => r === 2).length,
             poor: rating.filter(r => r === 1).length,
-            media: rating.reduce((acc, r) => acc + r, 0) / rating.length || 0
+            media: Number((rating.reduce((acc, r) => acc + r, 0) / rating.length || 0).toFixed(1))
         };
         return { data };
     }
