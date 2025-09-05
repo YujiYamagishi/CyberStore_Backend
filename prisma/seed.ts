@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    console.log(`Start seeding ...`);
 
     await prisma.review.deleteMany({});
     await prisma.storageOption.deleteMany({});
@@ -12,7 +11,6 @@ async function main() {
     await prisma.smartphoneSpec.deleteMany({});
     await prisma.category.deleteMany({});
 
-    console.log('Old data cleared.');
 
     await prisma.category.createMany({
         data: [
@@ -149,7 +147,6 @@ async function main() {
         ]
     });
 
-    console.log('Products seeded.');
 
     await prisma.colorsProduct.createMany({
         data: [
@@ -246,7 +243,6 @@ async function main() {
         ]
     });
 
-    console.log(`Seeding finished.`);
 }
 
 main()
