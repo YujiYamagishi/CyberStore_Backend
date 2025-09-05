@@ -29,7 +29,7 @@ export class ListProductsByBrandRoute implements Route {
 
     public static create(listProductsByBrandService: ListProductsByBrandUseCase): ListProductsByBrandRoute {
         return new ListProductsByBrandRoute(
-            "/api/products/brand/:brand",
+            "/api/products/related/:brand",
             HttpMethod.GET,
             listProductsByBrandService
         );

@@ -20,7 +20,7 @@ export class ListProductByIdRoute implements Route {
 
     public static create(getProductByIdService: ListProductByIdUseCase): ListProductByIdRoute {
         return new ListProductByIdRoute(
-            "/api/products/:id",
+            "/api/product/:id",
             HttpMethod.GET,
             getProductByIdService
         );
