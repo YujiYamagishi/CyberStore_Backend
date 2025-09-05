@@ -6,46 +6,40 @@ export type ListProductByTagInputDto = {
     tag: string;
 }
 
-export type ListProductByOutputTagDto = {
+export type ListProductByTagOutputDto = {
     products: {
         id: number,
-        name: string
-        price: number
-        tag: string
+        name: string,
+        price: number,
+        original_price?: number | undefined,
+        tag: string,
         url_image: string
     }[];
-
 }
 
-export class ListProductByTagUseCase implements Usecase<ListProductByTagInputDto, ListProductByOutputTagDto> {
+export class ListProductByTagUseCase implements Usecase<ListProductByTagInputDto, ListProductByTagOutputDto> {
     private constructor(private readonly productGateway: ProductGateway) { }
 
     public static create(productGateway: ProductGateway) {
         return new ListProductByTagUseCase(productGateway);
     }
 
-    public async execute(input: ListProductByTagInputDto): Promise<ListProductByOutputTagDto> {
-
+    public async execute(input: ListProductByTagInputDto): Promise<ListProductByTagOutputDto> {
         const aProducts = await this.productGateway.listByTag(input.tag);
-
         const output = this.presentOutput(aProducts);
-
         return output;
-
     }
 
-    private presentOutput(products: Product[]): ListProductByOutputTagDto {
-
-        const productsWithId = products.filter((p): p is Product & { id: number } =>
-            p.id !== undefined
-        );
-
+    private presentOutput(products: Product[]): ListProductByTagOutputDto {
         return {
-            products: productsWithId.map((p) => {
+            products: products.map((p) => {
+                const hasDiscount = p.discounted_price !== null && p.discounted_price !== undefined && p.discounted_price > 0;
+
                 return {
-                    id: p.id,
+                    id: p.id!,
                     name: p.name,
-                    price: p.price,
+                    price: hasDiscount ? p.discounted_price! : p.price,
+                    original_price: hasDiscount ? p.price : undefined,
                     tag: p.tag,
                     url_image: p.url_image
                 }

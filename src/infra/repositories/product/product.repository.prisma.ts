@@ -7,10 +7,15 @@ import { BrandTotal } from "../../../domain/brand/entity/brand-total.entity";
 export class ProductRepositoryPrisma implements ProductGateway {
 
     private constructor(private readonly prismaClient: PrismaClient) { }
+
+    public static create(prismaClient: PrismaClient) {
+        return new ProductRepositoryPrisma(prismaClient);
+    }
+
     async getBrandTotals(): Promise<BrandTotal[]> {
         const result = await this.prismaClient.product.groupBy({
             by: ['brand'],
-            _count: {brand:true},
+            _count: { brand: true },
         })
 
         const brandTotals = result.map(item => BrandTotal.create({
@@ -21,11 +26,6 @@ export class ProductRepositoryPrisma implements ProductGateway {
         return brandTotals;
     };
 
-    public static create(prismaClient: PrismaClient) {
-        return new ProductRepositoryPrisma(prismaClient);
-    }
-
-    //Fernando- Verificar o retorno de todos os itens
     public async list(): Promise<Product[]> {
         return [];
     }
@@ -46,7 +46,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
             description: p.description,
             brand: p.brand,
             price: Number(p.price),
-            discounted_price: Number(p.discounted_price),
+            discounted_price: p.discounted_price ? Number(p.discounted_price) : null,
             stock: p.stock,
             url_image: p.url_image,
             created_at: p.created_at,
@@ -73,7 +73,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
         return { product, smartphoneSpec };
     }
 
-    
+
     public async listByTag(tag: string): Promise<Product[]> {
         const products = await this.prismaClient.product.findMany({
             where: {
@@ -88,7 +88,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
                 description: p.description,
                 brand: p.brand,
                 price: Number(p.price),
-                discounted_price: Number(p.discounted_price),
+                discounted_price: p.discounted_price ? Number(p.discounted_price) : null,
                 stock: p.stock,
                 url_image: p.url_image,
                 created_at: p.created_at,
@@ -118,7 +118,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
                 description: p.description,
                 brand: p.brand,
                 price: Number(p.price),
-                discounted_price: Number(p.discounted_price),
+                discounted_price: p.discounted_price ? Number(p.discounted_price) : null,
                 stock: p.stock,
                 url_image: p.url_image,
                 created_at: p.created_at,
@@ -134,14 +134,14 @@ export class ProductRepositoryPrisma implements ProductGateway {
         return productList;
     }
 
-    public async listByCategory(
-        category: string,
-        page: number = 1,
-        limit: number = 9,
-        sort: string = "",
-        order: string = "",
-        brands: string[] = []
-    ): Promise<{
+    public async listByCategory(input: {
+        category: string;
+        page?: number;
+        limit?: number;
+        sort?: string;
+        order?: string;
+        brands?: string[] | undefined;
+    }): Promise<{
         data: Product[];
         metadata: {
             total_pages: number;
@@ -150,6 +150,8 @@ export class ProductRepositoryPrisma implements ProductGateway {
             per_page: number;
         };
     }> {
+        const { category, page = 1, limit = 9, sort = "", order = "", brands = [] } = input;
+
         const skip = (page - 1) * limit;
 
         const allowedSortFields = ["price", "name"];
@@ -166,7 +168,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
             },
         };
 
-        if (brands.length > 0) {
+        if (brands && brands.length > 0) {
             whereClause.brand = {
                 in: brands,
             };
@@ -190,7 +192,7 @@ export class ProductRepositoryPrisma implements ProductGateway {
                 description: p.description,
                 brand: p.brand,
                 price: Number(p.price),
-                discounted_price: Number(p.discounted_price),
+                discounted_price: p.discounted_price ? Number(p.discounted_price) : null,
                 stock: p.stock,
                 url_image: p.url_image,
                 created_at: p.created_at,
@@ -211,5 +213,4 @@ export class ProductRepositoryPrisma implements ProductGateway {
             },
         };
     }
-
 }

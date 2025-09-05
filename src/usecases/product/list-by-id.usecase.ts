@@ -16,7 +16,7 @@ export type SmartphoneSpecDto = {
     front_camera: string;
     battery: string;
     created_at: Date;
-    updated_at?: Date | undefined | null;
+    updated_at?: Date | null | undefined;
 };
 
 export type ListProductByIdOutputDto = {
@@ -26,7 +26,7 @@ export type ListProductByIdOutputDto = {
         description: string;
         brand: string;
         price: number;
-        discounted_price: number;
+        original_price?: number | undefined;
         stock: number;
         url_image: string;
         created_at: Date;
@@ -50,7 +50,6 @@ export class ListProductByIdUseCase implements Usecase<ListProductByIdInputDto, 
 
     public async execute(input: ListProductByIdInputDto): Promise<ListProductByIdOutputDto | null> {
         const { product, smartphoneSpec } = await this.productGateway.listById(input.id);
-
         if (!product) {
             return null;
         }
@@ -63,13 +62,15 @@ export class ListProductByIdUseCase implements Usecase<ListProductByIdInputDto, 
     }
 
     private presentOutput(product: Product, smartphoneSpec?: SmartphoneSpecDto | null, colors: ColorProductDto[] = [], storageOptions: string[] = []): ListProductByIdOutputDto {
+        const hasDiscount = product.discounted_price !== null && product.discounted_price !== undefined && product.discounted_price > 0;
+
         const base = {
             id: product.id!,
             name: product.name,
             description: product.description,
             brand: product.brand,
-            price: product.price,
-            discounted_price: product.discounted_price,
+            price: hasDiscount ? product.discounted_price! : product.price,
+            original_price: hasDiscount ? product.price : undefined,
             stock: product.stock,
             url_image: product.url_image,
             created_at: product.created_at,
@@ -88,6 +89,6 @@ export class ListProductByIdUseCase implements Usecase<ListProductByIdInputDto, 
                     ? { smartphoneSpec }
                     : {})
             }
-        };
+        }
     }
 }

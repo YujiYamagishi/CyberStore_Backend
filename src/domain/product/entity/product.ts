@@ -4,7 +4,7 @@ export type ProductProps = {
     description: string;
     brand: string;
     price: number;
-    discounted_price: number;
+    discounted_price: number | null;
     stock: number;
     url_image: string;
     created_at: Date;

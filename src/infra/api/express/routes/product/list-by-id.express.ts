@@ -2,26 +2,27 @@ import { Request, Response } from "express";
 import { HttpMethod, Route } from "../route";
 import { ListProductByIdUseCase, ListProductByIdOutputDto } from "../../../../../usecases/product/list-by-id.usecase";
 
+
 export class ListProductByIdRoute implements Route {
     private readonly path: string;
     private readonly method: HttpMethod;
-    private readonly listProductByIdService: ListProductByIdUseCase;
+    private readonly getProductByIdService: ListProductByIdUseCase;
 
     private constructor(
         path: string,
         method: HttpMethod,
-        listProductByIdService: ListProductByIdUseCase
+        getProductByIdService: ListProductByIdUseCase
     ) {
         this.path = path;
         this.method = method;
-        this.listProductByIdService = listProductByIdService;
+        this.getProductByIdService = getProductByIdService;
     }
 
-    public static create(listProductByIdService: ListProductByIdUseCase): ListProductByIdRoute {
+    public static create(getProductByIdService: ListProductByIdUseCase): ListProductByIdRoute {
         return new ListProductByIdRoute(
-            "/api/product/:id",
+            "/api/products/:id",
             HttpMethod.GET,
-            listProductByIdService
+            getProductByIdService
         );
     }
 
@@ -33,14 +34,14 @@ export class ListProductByIdRoute implements Route {
 
                 if (isNaN(numericId)) {
                     response.status(400).json({
-                        error: "Id parameter is required."
+                        error: "Id parameter must be a number."
                     });
                     return;
                 }
 
-                const output = await this.listProductByIdService.execute({ id: numericId });
+                const output = await this.getProductByIdService.execute({ id: numericId });
 
-                if (!output || !output.products) {
+                if (!output) {
                     response.status(404).json({
                         error: "Product not found."
                     });
@@ -66,9 +67,7 @@ export class ListProductByIdRoute implements Route {
         return this.method;
     }
 
-    private present(input: ListProductByIdOutputDto) {
-        return {
-            data: input.products
-        };
+    private present(input: ListProductByIdOutputDto): ListProductByIdOutputDto {
+        return input;
     }
 }
