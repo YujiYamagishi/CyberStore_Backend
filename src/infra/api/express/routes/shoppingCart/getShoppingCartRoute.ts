@@ -1,24 +1,34 @@
 // src/infra/api/express/routes/shoppingCart/getShoppingCartRoute.ts
-import type { Request, Response } from "express";
-import { Route, HttpMethod } from "../route";
+
+import { Response } from "express";
+import { Request, Route, HttpMethod } from "../route";
 import { prisma } from "../../../../../../prisma/client";
 
+// ✅ CORREÇÃO: Renomeamos a classe para bater com o que está sendo importado
 export class GetShoppingCartRoute implements Route {
   getPath(): string {
-    return "/api/shopping-carts/:userId";
+    return "/shopping-cart/:userId";
   }
 
-  getMethod() {
+  getMethod(): HttpMethod {
     return HttpMethod.GET;
   }
 
   getHandler() {
     return async (req: Request, res: Response) => {
       try {
-        const { userId } = req.params;
+        const clerkUserId = req.auth?.userId;
+        const requestedUserId = req.params.userId;
 
-        const cart = await prisma.shoppingCart.findFirst({
-          where: { user_id: Number(userId), status: "ativo" },
+        if (!clerkUserId || clerkUserId !== requestedUserId) {
+          return res.status(403).json({ message: "Acesso não autorizado." });
+        }
+
+        const activeCart = await prisma.shoppingCart.findFirst({
+          where: {
+            user_id: clerkUserId,
+            status: "ativo"
+          },
           include: {
             items: {
               include: {
@@ -28,24 +38,15 @@ export class GetShoppingCartRoute implements Route {
           },
         });
 
-        if (!cart) {
-          return res.status(404).json({
-            message: "Nenhum carrinho ativo encontrado para este usuário",
-            status_code: 404,
-          });
+        if (!activeCart) {
+          return res.status(404).json({ message: "Nenhum carrinho ativo encontrado para este usuário." });
         }
 
-        return res.json({
-          message: "Carrinho encontrado",
-          status_code: 200,
-          data: cart,
-        });
+        return res.status(200).json(activeCart);
+
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({
-          message: "Erro ao buscar carrinho",
-          status_code: 500,
-        });
+        console.error("Erro ao buscar o carrinho:", err);
+        return res.status(500).json({ message: "Erro interno ao buscar o carrinho." });
       }
     };
   }

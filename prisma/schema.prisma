@@ -107,7 +107,7 @@ model SmartphoneSpec {
 
 model ShoppingCart {
   id         Int                   @id @default(autoincrement())
-  user_id    Int
+  user_id    String
   status     String                @default("ativo") // "ativo" ou "finalizado"
   created_at DateTime             @default(now())
   updated_at DateTime             @updatedAt
