@@ -1,19 +1,21 @@
 {
   "include": ["src/**/*"],
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-     "rootDir": "./src",
-    // "outDir": "./dist",
+    "rootDir": "./src",
 
     // Environment Settings
-    // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "target": "esnext",
-    // For nodejs:
-    // "lib": ["esnext"],
-     "types": ["node"],
-    // and npm install -D @types/node
+    "types": ["node"],
+
+    // ✅ ADICIONE ESTE BLOCO
+    // Isso diz ao TypeScript para procurar por definições de tipos
+    // tanto na pasta padrão `node_modules` quanto na sua pasta `src/types`.
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
 
     // Other Outputs
     "sourceMap": true,
@@ -25,12 +27,7 @@
     "exactOptionalPropertyTypes": true,
 
     // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
+    // ...
 
     // Recommended Options
     "strict": true,
@@ -39,6 +36,6 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
 }

@@ -1,25 +1,43 @@
-import type { Api } from "../api";
+import type { Api } from "../api.interface";
 import * as express from "express";
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import type { Route } from "./routes/route";
 import * as cors from "cors";
+// ✅ Importa o middleware de segurança do Clerk
+import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
+
 export class ApiExpress implements Api {
     public app: Express;
 
     private constructor(routes: Route[]) {
         this.app = express();
 
-        const corsOptions = {
-            "origin" : 'http://localhost:5173'
-        }
-        this.app.use(cors(corsOptions));
+        // --- ORDEM CORRETA DOS MIDDLEWARES ---
+
+        // 1. (Opcional) Middleware de debug para logar todas as requisições que chegam
+        this.app.use((req: Request, res: Response, next: NextFunction) => {
+            console.log(`--> [${new Date().toLocaleTimeString()}] Requisição Recebida: ${req.method} ${req.originalUrl}`);
+            next();
+        });
+
+        // 2. Middleware de CORS para permitir requisições do seu frontend
+        this.app.use(cors());
+
+        // 3. Middleware para ler o corpo de requisições em formato JSON
         this.app.use(express.json());
+
+        // 4. Middleware de segurança do Clerk para proteger as rotas do carrinho
+        // Qualquer chamada para essas rotas vai exigir um token de autenticação válido.
+        this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
+        this.app.use('/shopping-cart', ClerkExpressRequireAuth());
+
+        // 5. Adiciona as rotas da sua aplicação (agora protegidas)
         this.addRoutes(routes);
         this.listRoutes();
     }
 
     public static create(routes: Route[]) {
-        return new ApiExpress(routes)
+        return new ApiExpress(routes);
     }
 
     private addRoutes(routes: Route[]) {
@@ -47,7 +65,7 @@ export class ApiExpress implements Api {
                 return {
                     path: route.route.path,
                     method: route.route.stack[0].method,
-                }
+                };
             });
     }
 }
