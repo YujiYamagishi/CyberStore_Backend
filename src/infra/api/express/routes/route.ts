@@ -1,13 +1,22 @@
-import type { Request, Response } from "express";
+import type { Request as ExpressRequest, Response } from "express";
 
-export type HttpMethod = "get";
+export interface Request extends ExpressRequest {
+  auth?: {
+    userId: string | null;
+  };
+}
 
-export const HttpMethod = {
-    GET: "get" as HttpMethod,
-} as const;
 
-export interface Route{
-    getHandler(): (request: Request, response: Response) => Promise<void>;
-    getPath(): string;
-    getMethod(): HttpMethod;
+export enum HttpMethod {
+    GET = "get",
+    POST = "post",
+    PATCH = "patch",
+    PUT = "put",
+}
+
+
+export interface Route {
+  getHandler(): (req: Request, res: Response) => Promise<any>;
+  getPath(): string;
+  getMethod(): HttpMethod;
 }

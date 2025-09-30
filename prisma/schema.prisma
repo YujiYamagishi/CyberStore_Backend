@@ -28,8 +28,11 @@ model Product {
   storageOptions   StorageOption[]
   reviews          Review[]
 
+  itemsShoppingCart ItemShoppingCart[]
+
   @@map("Products")
 }
+
 
 model ColorsProduct {
   id         Int      @id @default(autoincrement())
@@ -99,4 +102,28 @@ model SmartphoneSpec {
   produtos     Product[] 
 
   @@map("SmartphoneSpecs")
+}
+
+model ShoppingCart {
+  id         Int                   @id @default(autoincrement())
+  user_id    String
+  status     String                @default("ativo") 
+  created_at DateTime             @default(now())
+  updated_at DateTime             @updatedAt
+
+  items      ItemShoppingCart[]
+
+  @@map("shopping_cart")
+}
+
+model ItemShoppingCart {
+  id              Int       @id @default(autoincrement())
+  shopping_cart_id Int
+  product_id      Int
+  quantity        Int
+
+  shoppingCart    ShoppingCart @relation(fields: [shopping_cart_id], references: [id])
+  product         Product       @relation(fields: [product_id], references: [id])
+
+  @@map("items_shopping_cart")
 }

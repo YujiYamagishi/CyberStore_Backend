@@ -1,25 +1,39 @@
-import type { Api } from "../api";
+import type { Api } from "../api.interface";
 import * as express from "express";
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import type { Route } from "./routes/route";
 import * as cors from "cors";
+import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
+
 export class ApiExpress implements Api {
     public app: Express;
 
     private constructor(routes: Route[]) {
         this.app = express();
 
-        const corsOptions = {
-            "origin" : 'http://localhost:5173'
-        }
-        this.app.use(cors(corsOptions));
+        
+        this.app.use((req: Request, res: Response, next: NextFunction) => {
+            console.log(`--> [${new Date().toLocaleTimeString()}] Request Received: ${req.method} ${req.originalUrl}`);
+            next();
+        });
+
+        
+        this.app.use(cors());
+
+       
         this.app.use(express.json());
+
+      
+        this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
+        this.app.use('/shopping-cart', ClerkExpressRequireAuth());
+
+       
         this.addRoutes(routes);
         this.listRoutes();
     }
 
     public static create(routes: Route[]) {
-        return new ApiExpress(routes)
+        return new ApiExpress(routes);
     }
 
     private addRoutes(routes: Route[]) {
@@ -33,7 +47,6 @@ export class ApiExpress implements Api {
 
     public start(port: number) {
         this.app.listen(port, () => {
-            console.log(`Server running on port ${port}`);
         });
     }
 
@@ -47,7 +60,7 @@ export class ApiExpress implements Api {
                 return {
                     path: route.route.path,
                     method: route.route.stack[0].method,
-                }
+                };
             });
     }
 }

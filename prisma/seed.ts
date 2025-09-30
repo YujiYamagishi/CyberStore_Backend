@@ -4,12 +4,25 @@ const prisma = new PrismaClient();
 
 async function main() {
 
+    
+    await prisma.itemShoppingCart.deleteMany({});
+    await prisma.shoppingCart.deleteMany({});
     await prisma.review.deleteMany({});
     await prisma.storageOption.deleteMany({});
     await prisma.colorsProduct.deleteMany({});
     await prisma.product.deleteMany({});
     await prisma.smartphoneSpec.deleteMany({});
     await prisma.category.deleteMany({});
+
+
+    
+    await prisma.shoppingCart.create({
+        data: {
+            user_id: 1, 
+            status: 'ativo',
+        },
+    });
+    console.log('Carrinho de compras de teste criado com sucesso.');
 
 
     await prisma.category.createMany({
@@ -25,6 +38,7 @@ async function main() {
         ]
     });
 
+   
     await prisma.smartphoneSpec.createMany({
         data: [
             { id: 1, screen_size: '6.1 inch', cpu: 'A17 Pro', total_cores: '6 cores', main_camera: '48MP', front_camera: '12MP', battery: '3274mAh' },
@@ -35,7 +49,7 @@ async function main() {
         ]
     });
 
-    await prisma.product.createMany({
+   await prisma.product.createMany({
         data: [
             { id: 1, name: 'iPhone 15 Pro', description: 'The first iPhone forged in aerospace-grade titanium. Features the game-changing A17 Pro chip, a customizable Action button, and the most powerful iPhone camera system ever.', brand: 'Apple', price: 9299, stock: 50, url_image: 'https://s3-eu-west-1.amazonaws.com/images.linnlive.com/ebb85ab2ff7175b17de881baec9aa1c0/519b5581-4068-41fd-a3a1-bc4d38c189a9.jpg', tag: 'bestseller', id_category: 1, id_specs_smartphone: 1 },
             { id: 2, name: 'Samsung Galaxy S24 Ultra', description: 'Welcome to the era of mobile AI. With Galaxy S24 Ultra, you can unleash whole new levels of creativity, productivity and possibility, starting with the most important device in your life.', brand: 'Samsung', price: 8999, discounted_price: 8499, stock: 40, url_image: 'https://m.media-amazon.com/images/I/61dDx7O3sOL.jpg', tag: 'new_arrival', id_category: 1, id_specs_smartphone: 2 },
@@ -146,9 +160,8 @@ async function main() {
             { id: 710, name: 'Garmin Forerunner 265', description: 'A brilliant AMOLED display and training metrics to help you push your limits.', brand: 'Garmin', price: 3999, stock: 35, url_image: 'https://w7.pngwing.com/pngs/838/816/png-transparent-apple-watch-series-3-apple-watch-series-2-apple-watch-edition-apple-gold-apple-watch-fruit-nut.png', tag: 'discount_up_to_50', id_category: 8 },
         ]
     });
-
-
-    await prisma.colorsProduct.createMany({
+    
+     await prisma.colorsProduct.createMany({
         data: [
 
             { id_product: 1, hex_code: '#2E4053', name: 'Titanium Blue' },
@@ -242,15 +255,14 @@ async function main() {
             { id_product: 9, rating: 0, message: 'Gaming features overhyped, average performance.', name_user: 'Vanessa Souza', url_image_user: 'https://miro.medium.com/v2/resize:fit:1000/1*u93pnV0M6pMrrBZy5k6hWw.jpeg' }
         ]
     });
-
+    
 }
 
 main()
-    .then(async () => {
-        await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-        console.error(e);
-        await prisma.$disconnect();
-        process.exit(1);
-    });
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
