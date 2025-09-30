@@ -1,7 +1,5 @@
-// src/infra/api/express/routes/shoppingCart/updateShoppingCartRoute.ts
-
-import { Response } from "express"; // ✅ Pega `Response` diretamente do express
-import { Request, Route, HttpMethod } from "../route"; // Pega nossos tipos customizados do route.ts
+import { Response } from "express"; 
+import { Request, Route, HttpMethod } from "../route"; 
 import { prisma } from "../../../../../../prisma/client";
 
 export class UpdateShoppingCartRoute implements Route {
@@ -24,7 +22,7 @@ export class UpdateShoppingCartRoute implements Route {
 
         const cartToUpdate = await prisma.shoppingCart.findUnique({ where: { id: cartId } });
         
-        // Sem parseInt, pois user_id agora é String
+       
         if (!cartToUpdate || cartToUpdate.user_id !== userId) {
             return res.status(404).json({ message: "Carrinho não encontrado ou não pertence ao usuário." });
         }

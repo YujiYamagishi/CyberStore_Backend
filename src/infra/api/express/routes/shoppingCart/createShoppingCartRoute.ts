@@ -1,7 +1,5 @@
-// src/infra/api/express/routes/shoppingCart/createShoppingCartRoute.ts
-
-import { Response } from "express"; // ✅ Pega `Response` diretamente do express
-import { Request, Route, HttpMethod } from "../route"; // Pega nossos tipos customizados do route.ts
+import { Response } from "express"; 
+import { Request, Route, HttpMethod } from "../route"; 
 import { prisma } from "../../../../../../prisma/client";
 
 export class CreateShoppingCartRoute implements Route {
@@ -27,7 +25,7 @@ export class CreateShoppingCartRoute implements Route {
         
         const newCart = await prisma.shoppingCart.create({
             data: {
-                user_id: userId, // Sem parseInt, pois o ID agora é String
+                user_id: userId, 
                 status: "ativo",
                 items: {
                     create: products.map((p: { product_id: number; quantity: number }) => ({

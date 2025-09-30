@@ -28,7 +28,6 @@ model Product {
   storageOptions   StorageOption[]
   reviews          Review[]
 
-  // 👇 adicionar o inverso da relação
   itemsShoppingCart ItemShoppingCart[]
 
   @@map("Products")
@@ -108,7 +107,7 @@ model SmartphoneSpec {
 model ShoppingCart {
   id         Int                   @id @default(autoincrement())
   user_id    String
-  status     String                @default("ativo") // "ativo" ou "finalizado"
+  status     String                @default("ativo") 
   created_at DateTime             @default(now())
   updated_at DateTime             @updatedAt
 

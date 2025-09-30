@@ -1,10 +1,8 @@
-// src/infra/api/express/routes/shoppingCart/getShoppingCartRoute.ts
-
 import { Response } from "express";
 import { Request, Route, HttpMethod } from "../route";
 import { prisma } from "../../../../../../prisma/client";
 
-// ✅ CORREÇÃO: Renomeamos a classe para bater com o que está sendo importado
+
 export class GetShoppingCartRoute implements Route {
   getPath(): string {
     return "/shopping-cart/:userId";

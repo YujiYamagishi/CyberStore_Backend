@@ -3,7 +3,6 @@ import * as express from "express";
 import type { Express, Request, Response, NextFunction } from "express";
 import type { Route } from "./routes/route";
 import * as cors from "cors";
-// ✅ Importa o middleware de segurança do Clerk
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 
 export class ApiExpress implements Api {
@@ -12,26 +11,23 @@ export class ApiExpress implements Api {
     private constructor(routes: Route[]) {
         this.app = express();
 
-        // --- ORDEM CORRETA DOS MIDDLEWARES ---
-
-        // 1. (Opcional) Middleware de debug para logar todas as requisições que chegam
+        
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             console.log(`--> [${new Date().toLocaleTimeString()}] Requisição Recebida: ${req.method} ${req.originalUrl}`);
             next();
         });
 
-        // 2. Middleware de CORS para permitir requisições do seu frontend
+        
         this.app.use(cors());
 
-        // 3. Middleware para ler o corpo de requisições em formato JSON
+       
         this.app.use(express.json());
 
-        // 4. Middleware de segurança do Clerk para proteger as rotas do carrinho
-        // Qualquer chamada para essas rotas vai exigir um token de autenticação válido.
+      
         this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
         this.app.use('/shopping-cart', ClerkExpressRequireAuth());
 
-        // 5. Adiciona as rotas da sua aplicação (agora protegidas)
+       
         this.addRoutes(routes);
         this.listRoutes();
     }

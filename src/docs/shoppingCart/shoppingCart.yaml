@@ -1,5 +1,3 @@
-# src/docs/swagger/shopping-cart.yaml
-
 paths:
   /api/shopping_carts:
     post:

@@ -1,4 +1,3 @@
-// shoppingCart.route.ts
 import { Route } from "../route";
 import { CreateShoppingCartRoute } from "./createShoppingCartRoute";
 import { GetShoppingCartRoute } from "./getShoppingCartRoute";
