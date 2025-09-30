@@ -96,6 +96,5 @@ The main folder structure and its architectural purpose are organized as follows
 
 ## Full Stack
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/181165633?v=4" width=125><br><sub>Yuji Yamagishi</sub>](https://github.com/YujiYamagishi)  |
-| :---: | :---: | :---: |
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/181165633?v=4" width=125><br><sub>Yuji Yamagishi</sub>](https://github.com/YujiYamagishi)  
 
