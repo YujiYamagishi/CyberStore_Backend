@@ -13,7 +13,7 @@ export class ApiExpress implements Api {
 
         
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-            console.log(`--> [${new Date().toLocaleTimeString()}] Requisição Recebida: ${req.method} ${req.originalUrl}`);
+            console.log(`--> [${new Date().toLocaleTimeString()}] Request Received: ${req.method} ${req.originalUrl}`);
             next();
         });
 
@@ -47,7 +47,6 @@ export class ApiExpress implements Api {
 
     public start(port: number) {
         this.app.listen(port, () => {
-            console.log(`Server running on port ${port}`);
         });
     }
 

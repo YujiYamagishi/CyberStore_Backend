@@ -1,35 +1,29 @@
 {
   "include": ["src/**/*"],
   "compilerOptions": {
-    // File Layout
+    
     "rootDir": "./src",
 
-    // Environment Settings
+    
     "module": "commonjs",
     "target": "esnext",
     "types": ["node"],
 
-    // ✅ ADICIONE ESTE BLOCO
-    // Isso diz ao TypeScript para procurar por definições de tipos
-    // tanto na pasta padrão `node_modules` quanto na sua pasta `src/types`.
+  
     "typeRoots": [
       "./node_modules/@types",
       "./src/types"
     ],
 
-    // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Style Options
-    // ...
+    
 
-    // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": false,

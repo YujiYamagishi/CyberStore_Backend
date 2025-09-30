@@ -15,12 +15,12 @@ export class CreateShoppingCartRoute implements Route {
         const userId = req.auth?.userId;
 
         if (!userId) {
-          return res.status(401).json({ message: "Usuário não autenticado." });
+          return res.status(401).json({ message: "User not authenticated." });
         }
         
         const { products } = req.body;
         if (!products || !Array.isArray(products) || products.length === 0) {
-            return res.status(400).json({ message: "A lista de produtos é obrigatória." });
+            return res.status(400).json({ message: "The product list is mandatory." });
         }
         
         const newCart = await prisma.shoppingCart.create({
@@ -40,8 +40,8 @@ export class CreateShoppingCartRoute implements Route {
         return res.status(201).json(newCart);
 
       } catch (err) {
-        console.error("Erro ao criar o carrinho:", err);
-        return res.status(500).json({ message: "Erro interno ao criar o carrinho" });
+        console.error("Error creating cart:", err);
+        return res.status(500).json({ message: "Internal error creating cart" });
       }
     };
   }

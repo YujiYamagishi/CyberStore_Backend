@@ -19,7 +19,7 @@ export class GetShoppingCartRoute implements Route {
         const requestedUserId = req.params.userId;
 
         if (!clerkUserId || clerkUserId !== requestedUserId) {
-          return res.status(403).json({ message: "Acesso não autorizado." });
+          return res.status(403).json({ message: "Unauthorized access." });
         }
 
         const activeCart = await prisma.shoppingCart.findFirst({
@@ -37,14 +37,14 @@ export class GetShoppingCartRoute implements Route {
         });
 
         if (!activeCart) {
-          return res.status(404).json({ message: "Nenhum carrinho ativo encontrado para este usuário." });
+          return res.status(404).json({ message: "No active carts found for this user." });
         }
 
         return res.status(200).json(activeCart);
 
       } catch (err) {
-        console.error("Erro ao buscar o carrinho:", err);
-        return res.status(500).json({ message: "Erro interno ao buscar o carrinho." });
+        console.error("Error fetching cart:", err);
+        return res.status(500).json({ message: "Internal error while fetching cart." });
       }
     };
   }

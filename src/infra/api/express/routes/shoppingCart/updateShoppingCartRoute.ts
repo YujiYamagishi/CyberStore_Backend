@@ -17,14 +17,14 @@ export class UpdateShoppingCartRoute implements Route {
         const { products } = req.body;
 
         if (!userId) {
-            return res.status(401).json({ message: "Usuário não autenticado." });
+            return res.status(401).json({ message: "User not authenticated." });
         }
 
         const cartToUpdate = await prisma.shoppingCart.findUnique({ where: { id: cartId } });
         
        
         if (!cartToUpdate || cartToUpdate.user_id !== userId) {
-            return res.status(404).json({ message: "Carrinho não encontrado ou não pertence ao usuário." });
+            return res.status(404).json({ message: "Cart not found or does not belong to the user." });
         }
         
         await prisma.$transaction([
@@ -46,8 +46,8 @@ export class UpdateShoppingCartRoute implements Route {
         return res.status(200).json(updatedCart);
 
       } catch (err) {
-        console.error("Erro ao atualizar os itens do carrinho:", err);
-        return res.status(500).json({ message: "Erro interno ao atualizar o carrinho" });
+        console.error("Error updating cart items:", err);
+        return res.status(500).json({ message: "Internal error while updating cart" });
       }
     };
   }

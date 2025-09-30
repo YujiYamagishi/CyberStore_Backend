@@ -6,7 +6,7 @@ This is the official back-end API for the Cyber project, responsible for busines
 
 This repository contains the back-end API. The other related repositories are:
 
--   **[Cyber - Front-End](https://github.com/Ericklys/cyber-web-frontend.git)**: The main web application built with React that consumes this API.
+-   **[Cyber - Front-End](https://github.com/YujiYamagishi/AWS_FS_ABR25_D03_COMPASS_CYBER_FRONTEND.git)**: The main web application built with React that consumes this API.
 ## Requirements
 
 - Node.js 24
@@ -18,7 +18,7 @@ Follow these steps to set up and run the project:
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/fromanoel/cyber-web-backend.git
+   git clone https://github.com/YujiYamagishi/AWS_FS_ABR25_D03_COMPASS_CYBER_BACKEND.git
    ```
 
 2. **Enter the project folder:**
@@ -92,14 +92,10 @@ The main folder structure and its architectural purpose are organized as follows
 ├── package.json            # Project dependencies and scripts.
 └── tsconfig.json           # TypeScript configuration.
 ```
-# Developers 
+# Developer
 
-## Backend team
+## Full Stack
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/130419872?v=4" width=125><br><sub>Fernanda Romanoel </sub>](https://github.com/fromanoel) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/112771403?v=4" width=125><br><sub>Fernando Emidio</sub>](https://github.com/Fernando7492) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/117694456?v=4" width=125><br><sub>Jefferson Lucas</sub>](https://github.com/JeufoDev) |
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/181165633?v=4" width=125><br><sub>Yuji Yamagishi</sub>](https://github.com/YujiYamagishi)  |
 | :---: | :---: | :---: |
 
-## Frontend team
-
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/128267135?v=4" width=125><br><sub>Ericklys </sub>](https://github.com/Ericklys) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/133705031?v=4" width=125><br><sub>Tarcisio Lucas</sub>](https://github.com/T-Lucas43) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/181165633?v=4" width=125><br><sub>Yuji Yamagishi</sub>](https://github.com/YujiYamagishi) |   [<img loading="lazy" src="https://avatars.githubusercontent.com/u/18268176?v=4" width=125><br><sub> Alvino Pedrosa</sub>](https://github.com/alvinopf) |
-| :---: | :---: | :---: | :---: |
