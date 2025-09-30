@@ -1,7 +1,7 @@
 paths:
   /api/shopping_carts:
     post:
-      summary: "Cria um novo carrinho"
+      summary: "Create a new cart"
       tags: [ShoppingCart]
       requestBody:
         required: true
@@ -23,7 +23,7 @@ paths:
                         type: integer
       responses:
         "201":
-          description: "Carrinho criado com sucesso"
+          description: "Cart created successfully"
           content:
             application/json:
               schema:
@@ -53,7 +53,7 @@ paths:
 
   /api/shopping_carts/{shopping_cart_id}:
     put:
-      summary: "Atualiza os itens do carrinho"
+      summary: "Updates cart items"
       tags: [ShoppingCart]
       parameters:
         - in: path
@@ -61,7 +61,7 @@ paths:
           required: true
           schema:
             type: integer
-          description: "ID do carrinho a ser atualizado"
+          description: "Cart ID to be updated"
           example: 1
       requestBody:
         required: true
@@ -81,7 +81,7 @@ paths:
                         type: integer
       responses:
         "200":
-          description: "Carrinho atualizado"
+          description: "Updated cart"
           content:
             application/json:
               schema:
@@ -111,7 +111,7 @@ paths:
 
   /shopping-cart/{userId}:
     get:
-      summary: "Busca o carrinho ativo de um usuário"
+      summary: "Search a user's active cart"
       tags: [ShoppingCart]
       parameters:
         - in: path
@@ -119,11 +119,11 @@ paths:
           required: true
           schema:
             type: integer
-          description: "ID do usuário"
+          description: "User ID"
           example: 123
       responses:
         "200":
-          description: "Retorna o carrinho ativo"
+          description: "Returns the active cart"
           content:
             application/json:
               schema:
