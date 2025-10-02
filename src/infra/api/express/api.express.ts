@@ -41,7 +41,7 @@ export class ApiExpress implements Api {
             const path = route.getPath();
             const method = route.getMethod();
             const handler = route.getHandler();
-            this.app[method](path, handler);
+            (this.app as any)[method](path, handler); 
         });
     }
 
