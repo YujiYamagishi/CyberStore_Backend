@@ -8,7 +8,9 @@
     "prisma:generate": "npx prisma generate",
     "prisma:migrate:dev": "npx prisma migrate dev",
     "dev": "ts-node src/main.ts",
-    "setup:dev": "npm install && npm run prisma:generate && npm run prisma:migrate:dev"
+    "setup:dev": "npm install && npm run prisma:generate && npm run prisma:migrate:dev",
+    "build": "tsc", 
+    "start": "node dist/main.js"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
