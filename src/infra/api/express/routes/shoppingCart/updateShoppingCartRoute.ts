@@ -1,5 +1,6 @@
-import { Response } from "express"; 
-import { Request, Route, HttpMethod } from "../route"; 
+// updateShoppingCartRoute
+import { Response, Request } from "express"; // CORRIGIDO: Importa Request do express
+import { Route, HttpMethod } from "../route"; 
 import { prisma } from "../../../../../../prisma/client";
 
 export class UpdateShoppingCartRoute implements Route {
@@ -22,7 +23,7 @@ export class UpdateShoppingCartRoute implements Route {
 
         const cartToUpdate = await prisma.shoppingCart.findUnique({ where: { id: cartId } });
         
-       
+        
         if (!cartToUpdate || cartToUpdate.user_id !== userId) {
             return res.status(404).json({ message: "Cart not found or does not belong to the user." });
         }

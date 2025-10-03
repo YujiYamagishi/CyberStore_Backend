@@ -1,5 +1,5 @@
-import { Response } from "express"; 
-import { Request, Route, HttpMethod } from "../route"; 
+import { Response, Request } from "express"; 
+import { Route, HttpMethod } from "../route";
 import { prisma } from "../../../../../../prisma/client";
 
 export class CreateShoppingCartRoute implements Route {

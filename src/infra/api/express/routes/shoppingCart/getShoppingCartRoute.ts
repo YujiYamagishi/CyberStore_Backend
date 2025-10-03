@@ -1,5 +1,6 @@
-import { Response } from "express";
-import { Request, Route, HttpMethod } from "../route";
+// getShoppingCartRoutes
+import { Response, Request } from "express"; // CORRIGIDO: Importa Request do express
+import { Route, HttpMethod } from "../route";
 import { prisma } from "../../../../../../prisma/client";
 
 
