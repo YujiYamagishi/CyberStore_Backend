@@ -13,21 +13,21 @@ export class ApiExpress implements Api {
 
         
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-     
+            // Se precisar de algum log, ele entra aqui
             next();
         });
 
         
         this.app.use(cors());
 
-       
+        
         this.app.use(express.json());
 
-      
+        
         this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
         this.app.use('/shopping-cart', ClerkExpressRequireAuth());
 
-       
+        
         this.addRoutes(routes);
         this.listRoutes();
     }
@@ -45,10 +45,14 @@ export class ApiExpress implements Api {
         });
     }
 
-    public start(port: number) {
+    // --- ALTERAÇÃO AQUI ---
+    public start(port: number = 8000) { // Definimos 8000 como valor padrão
         this.app.listen(port, () => {
+             // Adiciona a mensagem para confirmar que o servidor iniciou
+             console.log(`🚀 Servidor backend rodando em http://localhost:${port}`);
         });
     }
+    // ----------------------
 
     private listRoutes() {
         if (!this.app._router || !this.app._router.stack) {
