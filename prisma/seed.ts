@@ -18,7 +18,7 @@ async function main() {
     
     await prisma.shoppingCart.create({
         data: {
-            user_id: 1, 
+            user_id: "1", 
             status: 'ativo',
         },
     });
