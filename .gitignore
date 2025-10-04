@@ -97,7 +97,7 @@ public
 *.tgz
 
 # Yarn Integrity file
-yarn.lock
+
 
 # dotenv environment variables file
 .env.local
@@ -125,5 +125,5 @@ Thumbs.db
 # JetBrains IDEs
 .idea/
 
-/src/generated/prisma
-/prisma/dev.db
+#/src/generated/prisma
+#/prisma/dev.db
