@@ -1,11 +1,22 @@
 import { ApiExpress } from "./express/api.express";
-import { shoppingCartRoutes } from "./express/routes/shoppingCart/shoppingCart.route";
+
+
+import { 
+    GetShoppingCartRoute, 
+    UpdateShoppingCartRoute, 
+    CreateShoppingCartRoute 
+} from "./express/routes/shoppingCart"; 
 
 const routes = [
-  ...shoppingCartRoutes,
- 
+  
+  new GetShoppingCartRoute(),
+  new UpdateShoppingCartRoute(),
+  new CreateShoppingCartRoute(),
+  
+  
 ];
 
 const api = ApiExpress.create(routes);
 
-api.start(3000);
+
+api.start(process.env.PORT || 8000);

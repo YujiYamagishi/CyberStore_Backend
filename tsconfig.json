@@ -1,5 +1,6 @@
 {
   "include": ["src/**/*", "prisma/**/*.ts"], 
+  "files": ["src/types/index.d.ts"], 
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./dist",
@@ -19,7 +20,7 @@
     "declarationMap": true,
 
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true, // Mantido, mas contribui para tipagem estrita
+    "exactOptionalPropertyTypes": true, 
 
     "strict": true,
     "jsx": "react-jsx",

@@ -1,5 +1,5 @@
 import { Session, User } from '@clerk/clerk-sdk-node';
-
+import "express";
 
 declare global {
   namespace Express {
