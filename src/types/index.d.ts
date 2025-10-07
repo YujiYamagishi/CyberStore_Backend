@@ -1,4 +1,3 @@
-// index.d.ts
 import { Session, User } from '@clerk/clerk-sdk-node';
 
 

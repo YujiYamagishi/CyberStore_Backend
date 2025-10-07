@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-    // Limpando o banco de dados
+    
     await prisma.itemShoppingCart.deleteMany({});
     await prisma.shoppingCart.deleteMany({});
     await prisma.review.deleteMany({});
@@ -15,7 +15,7 @@ async function main() {
     await prisma.category.deleteMany({});
     console.log('Banco de dados limpo com sucesso.');
 
-    // Criando um carrinho de compras de teste
+    
     await prisma.shoppingCart.create({
         data: {
             user_id: "1", 
@@ -24,7 +24,7 @@ async function main() {
     });
     console.log('Carrinho de compras de teste criado com sucesso.');
 
-    // URL base para as imagens no S3
+    
     const baseURL = "https://cyber-imgs-bucket.s3.us-east-2.amazonaws.com/";
 
 

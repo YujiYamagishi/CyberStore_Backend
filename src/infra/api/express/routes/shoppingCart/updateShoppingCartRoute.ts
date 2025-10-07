@@ -1,5 +1,4 @@
-// updateShoppingCartRoute
-import { Response, Request } from "express"; // CORRIGIDO: Importa Request do express
+import { Response, Request } from "express"; 
 import { Route, HttpMethod } from "../route"; 
 import { prisma } from "../../../../../../prisma/client";
 

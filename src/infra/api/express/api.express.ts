@@ -13,7 +13,7 @@ export class ApiExpress implements Api {
 
         
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-            // Se precisar de algum log, ele entra aqui
+            
             next();
         });
 
@@ -45,14 +45,14 @@ export class ApiExpress implements Api {
         });
     }
 
-    // --- ALTERAÇÃO AQUI ---
-    public start(port: number = 8000) { // Definimos 8000 como valor padrão
+    
+    public start(port: number = 8000) { 
         this.app.listen(port, () => {
-             // Adiciona a mensagem para confirmar que o servidor iniciou
+             
              console.log(`🚀 Servidor backend rodando em http://localhost:${port}`);
         });
     }
-    // ----------------------
+    
 
     private listRoutes() {
         if (!this.app._router || !this.app._router.stack) {
