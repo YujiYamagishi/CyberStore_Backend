@@ -117,6 +117,7 @@ npm run setup:prod
 
 # 2. Start the Express server with PM2 on port 8000
 pm2 start dist/main.js --name "cyber-backend"
+pm2 start ecosystem.config.js 
 
 # 3. Save the process list to restart automatically on server boot
 pm2 save
