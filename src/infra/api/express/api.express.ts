@@ -10,26 +10,26 @@ export class ApiExpress implements Api {
 
     private constructor(routes: Route[]) {
         this.app = express();
-
         
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-            
             next();
         });
 
-        
         this.app.use(cors());
-
-        
         this.app.use(express.json());
 
-        
+        // Suas rotas de autenticação (sem alterações)
         this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
         this.app.use('/shopping-cart', ClerkExpressRequireAuth());
-
         
+        // Adiciona as rotas que foram passadas
         this.addRoutes(routes);
-        this.listRoutes();
+
+        // ==========================================================
+        // ---> A CORREÇÃO ESTÁ AQUI <---
+        // Imprime a lista de rotas no console durante a inicialização
+        // ==========================================================
+        this.logRegisteredRoutes(routes);
     }
 
     public static create(routes: Route[]) {
@@ -45,26 +45,29 @@ export class ApiExpress implements Api {
         });
     }
 
-    
     public start(port: number = 8000) { 
         this.app.listen(port, () => {
-             
              console.log(`🚀 Servidor backend rodando em http://localhost:${port}`);
         });
     }
     
-
-    private listRoutes() {
-        if (!this.app._router || !this.app._router.stack) {
-            return;
-        }
-        const routes = this.app._router.stack
-            .filter((route: any) => route.route)
-            .map((route: any) => {
-                return {
-                    path: route.route.path,
-                    method: route.route.stack[0].method,
-                };
+    // ==========================================================
+    // ---> ESTA FUNÇÃO FOI ADICIONADA PARA O DIAGNÓSTICO <---
+    // ==========================================================
+    private logRegisteredRoutes(routes: Route[]) {
+        console.log("======================================");
+        console.log("========= ROTAS REGISTRADAS ==========");
+        
+        if (routes.length === 0) {
+            console.log("NENHUMA ROTA FOI PASSADA PARA O SERVIDOR.");
+        } else {
+            routes.forEach((route) => {
+                const path = route.getPath();
+                const method = route.getMethod();
+                console.log(`-> [${method.toUpperCase()}] ${path}`);
             });
+        }
+        
+        console.log("======================================");
     }
 }
