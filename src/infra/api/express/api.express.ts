@@ -18,14 +18,10 @@ export class ApiExpress implements Api {
         this.app.use(cors());
         this.app.use(express.json());
 
-        
+    
         this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
-        this.app.use('/shopping-cart', ClerkExpressRequireAuth());
-        
         
         this.addRoutes(routes);
-
-       
         this.logRegisteredRoutes(routes);
     }
 
@@ -44,10 +40,9 @@ export class ApiExpress implements Api {
 
     public start(port: number = 8000) { 
         this.app.listen(port, () => {
-             console.log(`🚀 Servidor backend rodando em http://localhost:${port}`);
+              console.log(`🚀 Servidor backend rodando em http://localhost:${port}`);
         });
     }
-    
     
     private logRegisteredRoutes(routes: Route[]) {
         console.log("======================================");
