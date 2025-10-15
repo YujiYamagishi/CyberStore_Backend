@@ -18,17 +18,14 @@ export class ApiExpress implements Api {
         this.app.use(cors());
         this.app.use(express.json());
 
-        // Suas rotas de autenticação (sem alterações)
+        
         this.app.use('/api/shopping_carts', ClerkExpressRequireAuth());
         this.app.use('/shopping-cart', ClerkExpressRequireAuth());
         
-        // Adiciona as rotas que foram passadas
+        
         this.addRoutes(routes);
 
-        // ==========================================================
-        // ---> A CORREÇÃO ESTÁ AQUI <---
-        // Imprime a lista de rotas no console durante a inicialização
-        // ==========================================================
+       
         this.logRegisteredRoutes(routes);
     }
 
@@ -51,9 +48,7 @@ export class ApiExpress implements Api {
         });
     }
     
-    // ==========================================================
-    // ---> ESTA FUNÇÃO FOI ADICIONADA PARA O DIAGNÓSTICO <---
-    // ==========================================================
+    
     private logRegisteredRoutes(routes: Route[]) {
         console.log("======================================");
         console.log("========= ROTAS REGISTRADAS ==========");
