@@ -225,26 +225,24 @@ async function main() {
 
 await prisma.review.createMany({
     data: [
-        // --- Imagens Corrigidas (com base no seu print do S3) ---
-        { id_product: 1, rating: 5, message: 'Best iPhone yet! The camera is incredible.', name_user: 'Lucas Almeida', url_image_user: `${userImagesBaseURL}/user_0_lucas-almeida.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 1, rating: 4, message: 'Very fast, but I miss the lightning port.', name_user: 'Beatriz Rocha', url_image_user: `${userImagesBaseURL}/user_1_beatriz-rocha.jpeg` }, // Estava correto
-        { id_product: 2, rating: 5, message: 'The zoom on this camera is basically magic.', name_user: 'Carlos Mendes', url_image_user: `${userImagesBaseURL}/user_2_carlos-mendes.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 3, rating: 4, message: 'Pure Android is so good. The phone feels very responsive.', name_user: 'Ana Costa', url_image_user: `${userImagesBaseURL}/user_3_ana-costa.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 701, rating: 5, message: 'The double tap gesture is surprisingly useful!', name_user: 'Gabriela Rocha', url_image_user: `${userImagesBaseURL}/user_7_gabriela-rocha.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 101, rating: 5, message: 'Yep. The real deal. I have only had the Apple MacBook Pro 14-inch...', name_user: 'Rodrigo Santos', url_image_user: `${userImagesBaseURL}/user_17_rodrigo-santos.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 101, rating: 5, message: 'I recently upgraded to the MacBook Pro with the M4 Pro chip...', name_user: 'Alexandre Pereira', url_image_user: `${userImagesBaseURL}/user_21_alexandre-pereira.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 9, rating: 5, message: 'Noise cancellation is incredible!', name_user: 'Vinicios Lima', url_image_user: `${userImagesBaseURL}/user_25_vinicios-lima.jpg` }, // Corrigido: .JPG -> .jpg
+       
+        { id_product: 1, rating: 5, message: 'Best iPhone yet! The camera is incredible.', name_user: 'Lucas Almeida', url_image_user: `${userImagesBaseURL}/user_0_lucas-almeida.jpg` },
+        { id_product: 1, rating: 4, message: 'Very fast, but I miss the lightning port.', name_user: 'Beatriz Rocha', url_image_user: `${userImagesBaseURL}/user_1_beatriz-rocha.jpeg` }, 
+        { id_product: 2, rating: 5, message: 'The zoom on this camera is basically magic.', name_user: 'Carlos Mendes', url_image_user: `${userImagesBaseURL}/user_2_carlos-mendes.jpg` }, 
+        { id_product: 3, rating: 4, message: 'Pure Android is so good. The phone feels very responsive.', name_user: 'Ana Costa', url_image_user: `${userImagesBaseURL}/user_3_ana-costa.jpg` }, 
+        { id_product: 701, rating: 5, message: 'The double tap gesture is surprisingly useful!', name_user: 'Gabriela Rocha', url_image_user: `${userImagesBaseURL}/user_7_gabriela-rocha.jpg` }, 
+        { id_product: 101, rating: 5, message: 'Yep. The real deal. I have only had the Apple MacBook Pro 14-inch...', name_user: 'Rodrigo Santos', url_image_user: `${userImagesBaseURL}/user_17_rodrigo-santos.jpg` }, 
+        { id_product: 101, rating: 5, message: 'I recently upgraded to the MacBook Pro with the M4 Pro chip...', name_user: 'Alexandre Pereira', url_image_user: `${userImagesBaseURL}/user_21_alexandre-pereira.jpg` }, 
+        { id_product: 9, rating: 5, message: 'Noise cancellation is incredible!', name_user: 'Vinicios Lima', url_image_user: `${userImagesBaseURL}/user_25_vinicios-lima.jpg` }, 
         
-        // --- REGISTRO COM ERRO DE DIGITAÇÃO CORRIGIDO ---
-        // Código antigo: user_26_carlos-mendonca.JPG
-        // Arquivo no S3: user_28_carlos-mendona.jpg
+        
         { id_product: 1, rating: 3, message: 'Battery life could be better for the price.', name_user: 'Carlos Mendonça', url_image_user: `${userImagesBaseURL}/user_28_carlos-mendona.jpg` },
 
-        { id_product: 1, rating: 3, message: 'Heats up too much during gaming.', name_user: 'Ricardo Santos', url_image_user: `${userImagesBaseURL}/user_30_ricardo-santos.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 5, rating: 2, message: 'Foldable screen developed cracks after 2 months.', name_user: 'Marcos Silva', url_image_user: `${userImagesBaseURL}/user_32_marcos-silva.jpg` }, // Corrigido: .JPG -> .jpg
-        { id_product: 7, rating: 2, message: 'Software bugs need to be fixed.', name_user: 'Roberto Almeida', url_image_user: `${userImagesBaseURL}/user_34_roberto-almeida.jpg` }, // Corrigido: .JPG -> .jpg
+        { id_product: 1, rating: 3, message: 'Heats up too much during gaming.', name_user: 'Ricardo Santos', url_image_user: `${userImagesBaseURL}/user_30_ricardo-santos.jpg` }, 
+        { id_product: 5, rating: 2, message: 'Foldable screen developed cracks after 2 months.', name_user: 'Marcos Silva', url_image_user: `${userImagesBaseURL}/user_32_marcos-silva.jpg` }, 
+        { id_product: 7, rating: 2, message: 'Software bugs need to be fixed.', name_user: 'Roberto Almeida', url_image_user: `${userImagesBaseURL}/user_34_roberto-almeida.jpg` }, 
 
-        // --- Imagens que NÃO estão no seu print do S3 (verificar se foram enviadas) ---
+       
         { id_product: 9, rating: 5, message: 'M3 Pro handles 4K video editing like a dream. Worth every penny.', name_user: 'João Silva', url_image_user: `${userImagesBaseURL}/joao-silva.jpg` },
         { id_product: 102, rating: 4, message: 'Beautiful machine for coding, but it can get a bit hot.', name_user: 'Mariana Souza', url_image_user: `${userImagesBaseURL}/mariana-souza.jpg` },
         { id_product: 401, rating: 5, message: 'The slim design looks so much better in my living room.', name_user: 'Ricardo Alves', url_image_user: `${userImagesBaseURL}/ricardo-alves.jpg` },
