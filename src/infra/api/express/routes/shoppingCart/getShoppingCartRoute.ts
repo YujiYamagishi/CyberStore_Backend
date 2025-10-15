@@ -5,7 +5,7 @@ import { prisma } from "../../../../../../prisma/client";
 
 export class GetShoppingCartRoute implements Route {
   getPath(): string {
-    return "/shopping-cart/:userId";
+    return "/api/shopping-cart/:userId";
   }
 
   getMethod(): HttpMethod {
