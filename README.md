@@ -20,8 +20,8 @@ Follow these steps to set up and run the project:
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/YujiYamagishi/AWS_FS_ABR25_D03_COMPASS_CYBER_BACKEND.git
-   git clone https://github.com/YujiYamagishi/AWS_FS_ABR25_D03_COMPASS_CYBER_FRONTEND.git
+   git clone https://github.com/YujiYamagishi/CyberStore_Backend.git
+   git clone https://github.com/YujiYamagishi/CyberStore_FrontEnd.git
    ```
 
 2. **Enter the project folder:**
